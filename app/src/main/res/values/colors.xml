@@ -10,7 +10,14 @@
 
     <color name="gray_50">#f9fafb</color>
     <color name="gray_200">#e5e7eb</color>
+    <color name="gray_500">#6b7280</color>
     <color name="gray_600">#4b5563</color>
+
+    <color name="green_500">#22c55e</color>
+
+    <color name="sky_100">#e0f2fe</color>
+    <color name="sky_200">#bae6fd</color>
+    <color name="sky_400">#38bdf8</color>
 
     <!--button_colors-->
     <color name="blue_600">#2563eb</color>
