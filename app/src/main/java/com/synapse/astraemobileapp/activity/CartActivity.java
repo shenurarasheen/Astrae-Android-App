@@ -28,19 +28,16 @@ public class CartActivity extends AppCompatActivity {
         Cart cartItem2 = new Cart();
         Cart cartItem3 = new Cart();
         Cart cartItem4 = new Cart();
-        Cart cartItem5 = new Cart();
 
         cartItem.setTitle("Ladies Necklace");
         cartItem2.setTitle("Diamond Necklace");
         cartItem3.setTitle("Ladies Necklace");
         cartItem4.setTitle("Gold Necklace");
-        cartItem5.setTitle("Ladies Necklace");
 
         cartItems.add(cartItem);
         cartItems.add(cartItem2);
         cartItems.add(cartItem3);
         cartItems.add(cartItem4);
-        cartItems.add(cartItem5);
 
         cartRecyclerView = findViewById(R.id.cartRecyclerView);
         cartAdapter = new CartAdapter(cartItems);
