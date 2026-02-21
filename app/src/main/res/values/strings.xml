@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Astrae Mobile App</string>
+    <string name="side_nav_profile_title">Profile</string>
+    <string name="side_nav_orders_title">Orders</string>
+    <string name="side_nav_cart_title">Cart</string>
+    <string name="side_nav_setting_title">Settings</string>
+    <string name="side_nav_add_product_title">Add Products</string>
+    <string name="side_nav_selling_products_title">Selling Products</string>
+    <string name="side_nav_login_title">Login</string>
+    <string name="side_nav_logout_title">Logout</string>
 </resources>
