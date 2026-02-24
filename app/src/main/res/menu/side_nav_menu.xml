@@ -18,6 +18,13 @@
             android:checkable="true"/>
 
         <item
+            android:id="@+id/side_nav_category"
+            android:icon="@drawable/ic_nav_category"
+            android:title="@string/side_nav_category_title"
+            android:visible="true"
+            android:checkable="true"/>
+
+        <item
             android:id="@+id/side_nav_orders"
             android:icon="@drawable/ic_nav_orders"
             android:title="@string/side_nav_orders_title"

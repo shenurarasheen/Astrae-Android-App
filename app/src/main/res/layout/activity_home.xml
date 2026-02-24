@@ -7,10 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".activity.HomeActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_toolbar_menu">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/toolbar_background"
+                android:drawableStart="@drawable/ic_toolbar_search"
+                android:drawablePadding="12dp"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="center_vertical"
+                android:hint="@string/search_bar_hint"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="14sp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_nav_menu"
+            app:itemIconTint="@color/md_theme_secondary"
+            app:labelVisibilityMode="labeled"
+            app:itemIconSize="25dp"/>
+
+    </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="280dp"
         android:layout_height="match_parent"
         app:menu="@menu/side_nav_menu"
+        app:headerLayout="@layout/side_nav_header"
         android:layout_gravity="start"
         app:itemIconSize="25dp" />
 
