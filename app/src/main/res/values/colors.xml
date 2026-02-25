@@ -156,6 +156,7 @@
     <color name="gray_50">#f9fafb</color>
     <color name="gray_100">#f3f4f6</color>
     <color name="gray_200">#e5e7eb</color>
+    <color name="gray_400">#9ca3af</color>
     <color name="gray_500">#6b7280</color>
     <color name="gray_600">#4b5563</color>
 
@@ -165,6 +166,9 @@
     <color name="sky_200">#bae6fd</color>
     <color name="sky_400">#38bdf8</color>
 
+    <color name="red_500">#ef4444</color>
+
     <!--button_colors-->
     <color name="blue_600">#2563eb</color>
+    <color name="btn_blue">#0d6efd</color>
 </resources>
