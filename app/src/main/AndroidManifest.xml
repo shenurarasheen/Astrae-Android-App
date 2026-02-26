@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AstraeMobileApp">
+
         <activity
-            android:name=".activity.SignInActivity"
+            android:name=".activity.SignUpActivity"
             android:exported="true">
 
             <intent-filter>
@@ -22,14 +23,17 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".activity.SignInActivity"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".activity.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SplashActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".activity.PaymentDetailsActivity"
             android:exported="true" />
