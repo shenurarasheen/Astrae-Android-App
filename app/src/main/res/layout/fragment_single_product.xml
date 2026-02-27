@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SingleProductFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:background="@drawable/necklace"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Women stylish gold necklace with pendant"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Women'S Stylish Pendant Necklace Featuring a Easy And Elegant Design with Faux Zinc Alloy Pendant, Perfect for Vacations And Everyday Wear"
+                    android:textSize="13sp"
+                    android:ellipsize="end"
+                    android:maxLines="4"/>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="3dp"
+                        android:background="@drawable/shape_sold_count_badge">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_spv_flame"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sold 20+"
+                            android:textSize="11sp"
+                            android:textColor="@color/sky_500"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginStart="3dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="|  Sold by"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/montserrat_medium"/>
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:padding="4dp"
+                            android:src="@drawable/img_default_profile"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/shape_circle_image"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text=">"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        android:layout_marginStart="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.5"
+                            android:textSize="12sp"
+                            android:textColor="#eab308"
+                            android:layout_marginEnd="5dp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                        <RatingBar
+                            android:id="@+id/single_product_rating"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:rating="4.5"
+                            android:progressTint="#eab308" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/single_product_estimate_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="9947.74"
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Est."
+                        android:layout_marginStart="6dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LKR"
+                        android:layout_marginStart="10dp"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9520.30"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
+
+
+                <!--Quantity input-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Qty"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="16dp">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/decrement_qty_btn"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:textAlignment="center"
+                            android:text="-"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+                        <TextView
+                            android:id="@+id/single_product_qty"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:textSize="13sp"
+                            android:textAlignment="center"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/increment_qty_btn"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:textAlignment="center"
+                            android:text="+"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
