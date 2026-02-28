@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.SingleProductFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/main_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_btn_panel">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,9 +19,25 @@
             android:orientation="vertical">
 
             <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/product_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="360dp"
                 android:background="@drawable/necklace"/>
+
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dots_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                app:dotsColor="@color/sky_200"
+                app:dotsSize="8dp"
+                app:dotsSpacing="4dp"
+                app:dotsCornerRadius="8dp"
+                app:selectedDotColor="@color/sky_500"
+                app:progressMode="true"
+                />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,6 +66,49 @@
                     android:maxLines="4"/>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24Kt"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:background="@drawable/shape_badge"
+                        android:paddingVertical="2dp"
+                        android:paddingHorizontal="4dp"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="6dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ladies"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:background="@drawable/shape_badge"
+                        android:paddingVertical="2dp"
+                        android:paddingHorizontal="4dp"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="6dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Necklace"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:background="@drawable/shape_badge"
+                        android:paddingVertical="2dp"
+                        android:paddingHorizontal="4dp"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="6dp"/>
+
+                </LinearLayout>
 
 
                 <LinearLayout
@@ -53,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="16dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -194,14 +257,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Qty"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:fontFamily="@font/montserrat_semibold"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="16dp">
+                        android:layout_marginStart="10dp">
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/decrement_qty_btn"
@@ -211,14 +274,15 @@
                             android:text="-"
                             android:textSize="13sp"
                             android:fontFamily="@font/montserrat_semibold"/>
+
                         <TextView
                             android:id="@+id/single_product_qty"
                             android:layout_width="30dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:text="1"
+                            android:gravity="center"
                             android:fontFamily="@font/montserrat_semibold"
-                            android:textSize="13sp"
-                            android:textAlignment="center"/>
+                            android:textSize="13sp" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/increment_qty_btn"
@@ -228,6 +292,28 @@
                             android:text="+"
                             android:textSize="13sp"
                             android:fontFamily="@font/montserrat_semibold"/>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="30dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="View Certificate >"
+                                android:textSize="11.5sp"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:textColor="@color/sky_400"
+                                android:background="@drawable/shape_view_certificate_btn"
+                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="6dp"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -240,4 +326,54 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+    <!-- FloatingActionButton placed above the ViewPager2 (top-end). Aligns to the NestedScrollView top so it overlays the top child (the ViewPager) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:fabCustomSize="50dp"
+        android:layout_alignTop="@id/main_scroll"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        app:maxImageSize="24dp"
+        app:srcCompat="@drawable/back2"
+        android:scaleType="center"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        android:background="@drawable/shape_back_btn"
+        app:backgroundTint="@color/md_theme_secondaryContainer" />
+
+    <LinearLayout
+        android:id="@+id/bottom_btn_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/cart_price_background"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:text="Add to cart"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_semibold"
+            android:backgroundTint="@color/btn_blue"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/md_theme_onTertiary"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="Buy now"
+            android:textColor="@color/btn_blue"
+            app:strokeColor="@color/btn_blue"
+            app:strokeWidth="1.3dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

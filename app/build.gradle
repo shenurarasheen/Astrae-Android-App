@@ -52,4 +52,7 @@ dependencies {
 
     //glide dependency - for image loading
     implementation libs.glide
+
+    //dot-indicator dependency
+    implementation("com.tbuonomo:dotsindicator:5.1.0")
 }
