@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/product_card_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardUseCompatPadding="true"
+                android:preventCornerOverlap="false">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/necklace"
+                    android:background="@drawable/rounded_top_corners"
+                    android:clipToOutline="true" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dp"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ladies necklace with pendant"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textSize="18sp"
+                        android:ellipsize="end"
+                        android:maxLines="2"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="24Kt"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:textColor="@color/sky_400"
+                            android:background="@drawable/shape_view_certificate_btn"
+                            android:padding="3dp"
+                            android:layout_marginEnd="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Necklace"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:textColor="@color/sky_400"
+                            android:background="@drawable/shape_view_certificate_btn"
+                            android:padding="3dp"
+                            android:layout_marginEnd="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pendant"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:textColor="@color/sky_400"
+                            android:background="@drawable/shape_view_certificate_btn"
+                            android:padding="3dp"
+                            android:layout_marginEnd="5dp"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:maxLines="2"
+                        android:text="Women'S Stylish Pendant Necklace Featuring a Easy And Elegant Design with Faux Zinc Alloy Pendant, Perfect for Vacations And Everyday Wear"
+                        android:textColor="@color/md_theme_onSecondaryFixedVariant"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="14dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="3">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Price"
+                                android:textAllCaps="true"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/montserrat_semibold"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="LKR 23000.00"
+                                android:textSize="15.5sp"
+                                android:fontFamily="@font/montserrat_bold"/>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Buy"
+                            android:layout_weight="2"
+                            android:textSize="11sp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:backgroundTint="@color/btn_blue"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_add_to_cart"
+        android:background="@drawable/bg_cart_icon"
+        android:layout_alignTop="@+id/product_card_container"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="7dp"/>
+
+</RelativeLayout>
