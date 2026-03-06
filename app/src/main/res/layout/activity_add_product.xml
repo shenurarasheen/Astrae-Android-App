@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AddProductActivity"
+    android:layout_margin="15dp">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Add Products"
+        android:textSize="22sp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:backgroundTint="@color/md_theme_inverseOnSurface_mediumContrast">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginVertical="20dp"
+                    android:background="@drawable/shape_image_upload_outline"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_upload"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Product Images"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:textColor="@color/md_theme_outline"
+                        android:layout_marginTop="8dp"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adding 3 product images is required*"
+                android:textSize="11sp"
+                android:textColor="@color/md_theme_outlineVariant"
+                android:textAlignment="textEnd"
+                android:fontFamily="@font/montserrat_semibold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/necklace"
+                    app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
+                    android:scaleType="centerCrop"
+                    android:elevation="4dp"
+                    android:outlineSpotShadowColor="@color/black" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/necklace"
+                    app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
+                    android:layout_marginStart="-20dp"
+                    android:elevation="6dp"
+                    android:outlineSpotShadowColor="@color/black" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/necklace"
+                    app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
+                    android:layout_marginStart="-20dp"
+                    android:elevation="8dp"
+                    android:outlineSpotShadowColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Product Title"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/input_background"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:hint="Ladies Necklace"
+                    android:inputType="text"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/gray_600"
+                    android:textColorHint="@color/gray_500"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Description"
+                    android:textSize="13sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/descriptionInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200"
+                    app:helperText="Write a brief summary of the item"
+                    app:helperTextTextAppearance="@style/HelperTextAppearance"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_background"
+                        android:gravity="top"
+                        android:inputType="textMultiLine"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textSize="13sp"
+                        android:lines="4"
+                        android:minLines="3"
+                        android:scrollbars="vertical" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Price"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/input_background"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/gray_600"
+                    android:textColorHint="@color/gray_500"
+                    android:textSize="13sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="Category"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/input_background"
+                            android:ems="10"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:hint="Select a Category"
+                            android:inputType="text"
+                            android:paddingHorizontal="10dp"
+                            android:textColor="@color/gray_600"
+                            android:textColorHint="@color/gray_500"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="Size"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/input_background"
+                            android:ems="10"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:hint="34"
+                            android:inputType="text"
+                            android:paddingHorizontal="10dp"
+                            android:textColor="@color/gray_600"
+                            android:textColorHint="@color/gray_500"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Metal"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/input_background"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:hint="ex:- 24Kt Gold"
+                    android:inputType="numberDecimal"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/gray_600"
+                    android:textColorHint="@color/gray_500"
+                    android:textSize="13sp" />
+
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Upload Certificate"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/input_background">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Upload certificate from here"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textColor="@color/gray_500"
+                        android:gravity="center_vertical"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_upload"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/btn_blue"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Add Product"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="4dp"
+
+                        android:layout_weight="1"
+                        android:backgroundTint="@android:color/transparent"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Discard"
+                        android:textColor="@color/btn_blue"
+                        android:textSize="14sp"
+                        app:strokeColor="@color/btn_blue"
+                        app:strokeWidth="1.4dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
