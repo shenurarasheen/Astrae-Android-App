@@ -338,7 +338,7 @@
         app:maxImageSize="24dp"
         app:srcCompat="@drawable/back2"
         android:scaleType="center"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        app:shapeAppearanceOverlay="@style/CircleImage"
         android:background="@drawable/shape_back_btn"
         app:backgroundTint="@color/md_theme_secondaryContainer" />
 
