@@ -74,6 +74,7 @@
                         android:textSize="12sp" />
 
                     <EditText
+                        android:id="@+id/signup_first_name_input"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:layout_marginTop="5dp"
@@ -102,6 +103,7 @@
                         android:textSize="12sp" />
 
                     <EditText
+                        android:id="@+id/signup_last_name_input"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:layout_marginTop="5dp"
@@ -126,6 +128,7 @@
                 android:textSize="12sp" />
 
             <EditText
+                android:id="@+id/signup_email_input"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginTop="5dp"
@@ -146,11 +149,12 @@
                 android:textSize="12sp" />
 
             <EditText
+                android:id="@+id/signup_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shape_input"
-                android:drawableEnd="@drawable/ic_input_visibility"
+                android:drawableEnd="@drawable/ic_input_show"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:hint="Password"
@@ -169,11 +173,12 @@
                 android:textSize="12sp" />
 
             <EditText
+                android:id="@+id/signup_confirm_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shape_input"
-                android:drawableEnd="@drawable/ic_input_visibility"
+                android:drawableEnd="@drawable/ic_input_show"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:hint="Confirm Password"
@@ -182,12 +187,14 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/signup_error_message_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="This is the error messsage"
                 android:textColor="@color/red_500"
+                android:visibility="gone"
                 android:textSize="10sp" />
 
 
@@ -255,6 +262,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/signup_move_to_signin_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"

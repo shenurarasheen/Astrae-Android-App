@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="16dp"
+    android:padding="16dp"
     tools:context=".activity.SignInActivity">
 
     <TextView
@@ -73,6 +73,7 @@
         android:fontFamily="@font/montserrat_medium"/>
 
     <EditText
+        android:id="@+id/signin_password_input"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginTop="8dp"
@@ -82,7 +83,7 @@
         android:textSize="12sp"
         android:inputType="textPassword"
         android:paddingHorizontal="10dp"
-        android:drawableEnd="@drawable/ic_input_visibility"
+        android:drawableEnd="@drawable/ic_input_show"
         android:drawablePadding="10dp"/>
 
     <TextView
@@ -170,6 +171,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/signin_move_to_signup_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
