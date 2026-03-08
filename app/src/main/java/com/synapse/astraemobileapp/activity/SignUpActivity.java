@@ -1,27 +1,21 @@
 package com.synapse.astraemobileapp.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.databinding.ActivitySignUpBinding;
+import com.synapse.astraemobileapp.model.User;
 import com.synapse.astraemobileapp.util.PasswordUtils;
+import com.synapse.astraemobileapp.util.ValidationUtils;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -47,42 +41,19 @@ public class SignUpActivity extends AppCompatActivity {
         // handle sign in text click
         binding.signupMoveToSigninText.setOnClickListener(v -> moveToSignIn());
 
+        // handle sign up button click
+        binding.signupBtn.setOnClickListener(v -> saveUserData());
+
     }
 
     private void saveUserData() {
-        String firstName = binding.signupFirstNameInput.getText().toString();
-        String lastName = binding.signupLastNameInput.getText().toString();
-        String email = binding.signupEmailInput.getText().toString();
-        String password = binding.signupPasswordInput.getText().toString();
-        String confirmPassword = binding.signupConfirmPasswordInput.toString();
+        String firstName = binding.signupFirstNameInput.getText().toString().trim();
+        String lastName = binding.signupLastNameInput.getText().toString().trim();
+        String email = binding.signupEmailInput.getText().toString().trim();
+        String password = binding.signupPasswordInput.getText().toString().trim();
+        String confirmPassword = binding.signupConfirmPasswordInput.getText().toString().trim();
 
-        if (firstName.isEmpty()) {
-            showError(binding.signupFirstNameInput, "First name is required");
-            return;
-        }
-
-        if (lastName.isEmpty()) {
-            showError(binding.signupLastNameInput, "Last name is required");
-            return;
-        }
-
-        if (email.isEmpty()) {
-            showError(binding.signupEmailInput, "Email is required");
-            return;
-        }
-
-        if (password.isEmpty()) {
-            showError(binding.signupPasswordInput, "Password is required");
-            return;
-        }
-
-        if (confirmPassword.isEmpty()) {
-            showError(binding.signupConfirmPasswordInput, "Confirm password is required");
-            return;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            showError(binding.signupConfirmPasswordInput, "Passwords do not match");
+        if (!isInputValid(firstName, lastName, email, password, confirmPassword)) {
             return;
         }
 
@@ -96,14 +67,79 @@ public class SignUpActivity extends AppCompatActivity {
 
                         String uId = task.getResult().getUser().getUid();
 
-                        Log.i(SignUpActivity.class.getSimpleName(), "Created user with uid=" + uId);
+                        Log.i("SignUpActivity", "Created user with uid=" + uId);
 
                         //save user data to firestore
+                        User user = User.builder()
+                                .uId(uId)
+                                .firstName(firstName)
+                                .lastName(lastName)
+                                .email(email)
+                                .build();
 
+                        db.collection("users")
+                                .document(uId)
+                                .set(user)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(getApplicationContext(), "Registration successful!. Please sign in.", Toast.LENGTH_SHORT).show();
+                                    Log.i("SignUpActivity", "User data saved successfully for uid=" + uId);
+                                    moveToSignIn();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(getApplicationContext(), "Registration failed!. Please try again.", Toast.LENGTH_SHORT).show();
+                                    Log.e("SignUpActivity", "Failed to save user data for uid=" + uId);
+                                });
+
+                    } else {
+                        String errorMessage = task.getException() != null ?
+                                task.getException().getMessage() : "Authentication failed";
+                        Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                        Log.e("SignUpActivity", "Auth failed: " + errorMessage);
                     }
 
                 });
+    }
 
+
+    private boolean isInputValid(String firstName, String lastName, String email, String password, String confirmPassword) {
+
+        if (firstName.isEmpty()) {
+            showError(binding.signupFirstNameInput, "First name is required");
+            return false;
+        }
+
+        if (lastName.isEmpty()) {
+            showError(binding.signupLastNameInput, "Last name is required");
+            return false;
+        }
+
+        if (email.isEmpty()) {
+            showError(binding.signupEmailInput, "Email is required");
+            return false;
+        } else if (!ValidationUtils.isValidEmail(email)) {
+            showError(binding.signupEmailInput, "Invalid email format");
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            showError(binding.signupPasswordInput, "Password is required");
+            return false;
+        } else if (!ValidationUtils.isValidPassword(password)) {
+            showError(binding.signupPasswordInput, "Password must be at least 6 characters");
+            return false;
+        }
+
+        if (confirmPassword.isEmpty()) {
+            showError(binding.signupConfirmPasswordInput, "Confirm password is required");
+            return false;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            showError(binding.signupConfirmPasswordInput, "Passwords do not match");
+            return false;
+        }
+
+        return true;
     }
 
     private void showError(EditText editText, String message) {
