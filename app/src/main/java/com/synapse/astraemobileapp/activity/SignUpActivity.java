@@ -1,27 +1,23 @@
 package com.synapse.astraemobileapp.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.databinding.ActivitySignUpBinding;
+import com.synapse.astraemobileapp.model.User;
 import com.synapse.astraemobileapp.util.PasswordUtils;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -29,6 +25,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
+
+
+    private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,9 @@ public class SignUpActivity extends AppCompatActivity {
         // handle sign in text click
         binding.signupMoveToSigninText.setOnClickListener(v -> moveToSignIn());
 
+        // handle sign up button click
+        binding.signupBtn.setOnClickListener(v -> saveUserData());
+
     }
 
     private void saveUserData() {
@@ -54,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         String lastName = binding.signupLastNameInput.getText().toString();
         String email = binding.signupEmailInput.getText().toString();
         String password = binding.signupPasswordInput.getText().toString();
-        String confirmPassword = binding.signupConfirmPasswordInput.toString();
+        String confirmPassword = binding.signupConfirmPasswordInput.getText().toString();
 
         if (firstName.isEmpty()) {
             showError(binding.signupFirstNameInput, "First name is required");
@@ -96,9 +98,28 @@ public class SignUpActivity extends AppCompatActivity {
 
                         String uId = task.getResult().getUser().getUid();
 
-                        Log.i(SignUpActivity.class.getSimpleName(), "Created user with uid=" + uId);
+                        Log.i("SignUpActivity", "Created user with uid=" + uId);
 
                         //save user data to firestore
+                        User user = User.builder()
+                                .uId(uId)
+                                .firstName(firstName)
+                                .lastName(lastName)
+                                .email(email)
+                                .build();
+
+                        db.collection("users")
+                                .document(uId)
+                                .set(user)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(getApplicationContext(), "Registration successful!. Please sign in.", Toast.LENGTH_SHORT).show();
+                                    Log.i("SignUpActivity", "User data saved successfully for uid=" + uId);
+                                    moveToSignIn();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(getApplicationContext(), "Registration failed!. Please try again.", Toast.LENGTH_SHORT).show();
+                                    Log.e("SignUpActivity", "Failed to save user data for uid=" + uId);
+                                });
 
                     }
 
