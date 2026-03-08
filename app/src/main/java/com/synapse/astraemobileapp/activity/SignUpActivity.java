@@ -15,9 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.synapse.astraemobileapp.databinding.ActivitySignUpBinding;
 import com.synapse.astraemobileapp.model.User;
 import com.synapse.astraemobileapp.util.PasswordUtils;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.synapse.astraemobileapp.util.ValidationUtils;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -25,9 +23,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-
-
-    private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,39 +47,13 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void saveUserData() {
-        String firstName = binding.signupFirstNameInput.getText().toString();
-        String lastName = binding.signupLastNameInput.getText().toString();
-        String email = binding.signupEmailInput.getText().toString();
-        String password = binding.signupPasswordInput.getText().toString();
-        String confirmPassword = binding.signupConfirmPasswordInput.getText().toString();
+        String firstName = binding.signupFirstNameInput.getText().toString().trim();
+        String lastName = binding.signupLastNameInput.getText().toString().trim();
+        String email = binding.signupEmailInput.getText().toString().trim();
+        String password = binding.signupPasswordInput.getText().toString().trim();
+        String confirmPassword = binding.signupConfirmPasswordInput.getText().toString().trim();
 
-        if (firstName.isEmpty()) {
-            showError(binding.signupFirstNameInput, "First name is required");
-            return;
-        }
-
-        if (lastName.isEmpty()) {
-            showError(binding.signupLastNameInput, "Last name is required");
-            return;
-        }
-
-        if (email.isEmpty()) {
-            showError(binding.signupEmailInput, "Email is required");
-            return;
-        }
-
-        if (password.isEmpty()) {
-            showError(binding.signupPasswordInput, "Password is required");
-            return;
-        }
-
-        if (confirmPassword.isEmpty()) {
-            showError(binding.signupConfirmPasswordInput, "Confirm password is required");
-            return;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            showError(binding.signupConfirmPasswordInput, "Passwords do not match");
+        if (!isInputValid(firstName, lastName, email, password, confirmPassword)) {
             return;
         }
 
@@ -121,10 +90,56 @@ public class SignUpActivity extends AppCompatActivity {
                                     Log.e("SignUpActivity", "Failed to save user data for uid=" + uId);
                                 });
 
+                    } else {
+                        String errorMessage = task.getException() != null ?
+                                task.getException().getMessage() : "Authentication failed";
+                        Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                        Log.e("SignUpActivity", "Auth failed: " + errorMessage);
                     }
 
                 });
+    }
 
+
+    private boolean isInputValid(String firstName, String lastName, String email, String password, String confirmPassword) {
+
+        if (firstName.isEmpty()) {
+            showError(binding.signupFirstNameInput, "First name is required");
+            return false;
+        }
+
+        if (lastName.isEmpty()) {
+            showError(binding.signupLastNameInput, "Last name is required");
+            return false;
+        }
+
+        if (email.isEmpty()) {
+            showError(binding.signupEmailInput, "Email is required");
+            return false;
+        } else if (!ValidationUtils.isValidEmail(email)) {
+            showError(binding.signupEmailInput, "Invalid email format");
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            showError(binding.signupPasswordInput, "Password is required");
+            return false;
+        } else if (!ValidationUtils.isValidPassword(password)) {
+            showError(binding.signupPasswordInput, "Password must be at least 6 characters");
+            return false;
+        }
+
+        if (confirmPassword.isEmpty()) {
+            showError(binding.signupConfirmPasswordInput, "Confirm password is required");
+            return false;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            showError(binding.signupConfirmPasswordInput, "Passwords do not match");
+            return false;
+        }
+
+        return true;
     }
 
     private void showError(EditText editText, String message) {
