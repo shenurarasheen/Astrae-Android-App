@@ -52,6 +52,7 @@
         android:fontFamily="@font/montserrat_medium"/>
 
     <EditText
+        android:id="@+id/signin_email_input"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginTop="8dp"
@@ -87,13 +88,15 @@
         android:drawablePadding="10dp"/>
 
     <TextView
+        android:id="@+id/signin_error_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="This is the error messsage"
         android:textSize="10sp"
         android:textColor="@color/red_500"
         android:fontFamily="@font/montserrat_medium"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="4dp"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -105,6 +108,7 @@
         android:textAlignment="textEnd"/>
 
     <Button
+        android:id="@+id/signin_btn"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="20dp"
