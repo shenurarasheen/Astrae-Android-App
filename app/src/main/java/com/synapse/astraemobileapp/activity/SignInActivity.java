@@ -14,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -41,6 +42,11 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         auth = FirebaseAuth.getInstance();
+
+        //skip text click
+        binding.signinSkipText.setOnClickListener(v -> {
+            updateUi(HomeActivity.class);
+        });
 
         //handle password visibility
         PasswordUtils.togglePasswordVisibility(binding.signinPasswordInput);

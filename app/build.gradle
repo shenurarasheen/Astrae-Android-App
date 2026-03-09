@@ -61,4 +61,7 @@ dependencies {
 
     //dot-indicator dependency
     implementation(libs.dotsindicator)
+
+    //google flexbox layout dependency
+    implementation libs.flexbox
 }

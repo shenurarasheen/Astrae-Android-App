@@ -72,7 +72,7 @@
             android:checkable="true"/>
 
         <item
-            android:id="@+id/side_nan_logout"
+            android:id="@+id/side_nav_logout"
             android:icon="@drawable/ic_nav_logout"
             android:title="@string/side_nav_logout_title"
             android:visible="true"
