@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PaymentDetailsActivity"
-    android:background="@color/white">
+    tools:context=".activity.PaymentDetailsActivity">
 
     <ImageView
         android:id="@+id/imageView5"
@@ -16,7 +15,7 @@
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back2" />
+        app:srcCompat="@drawable/ic_back_arrow" />
 
     <TextView
         android:id="@+id/textView5"
@@ -26,7 +25,6 @@
         android:layout_marginTop="15dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Payment Details"
-        android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
@@ -48,7 +46,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp">
 
             <CheckBox
                 android:id="@+id/checkBox2"
@@ -56,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Fill details"
-                android:textColor="@color/black"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,8 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="First Name"
-                        android:textColor="@color/black" />
+                        android:text="First Name" />
 
                     <EditText
                         android:id="@+id/editTextText"
@@ -116,8 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Last Name"
-                        android:textColor="@color/black" />
+                        android:text="Last Name" />
 
                     <EditText
                         android:id="@+id/editTextText2"
@@ -143,7 +139,6 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Address Line 1"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
@@ -170,7 +165,6 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Address Line 2"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
 
@@ -214,8 +208,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="City"
-                        android:textColor="@color/black" />
+                        android:text="City" />
 
                     <EditText
                         android:id="@+id/editTextText5"
@@ -246,8 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Postal Code"
-                        android:textColor="@color/black" />
+                        android:text="Postal Code" />
 
                     <EditText
                         android:id="@+id/editTextTextPostalAddress"
@@ -273,7 +265,6 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Mobile Number"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
@@ -319,7 +310,6 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat_semibold"
             android:text="Total Amount"
-            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -331,7 +321,6 @@
             android:fontFamily="@font/montserrat_semibold"
             android:text="$ 512.12"
             android:textAlignment="textEnd"
-            android:textColor="@color/black"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
@@ -347,7 +336,6 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/montserrat_semibold"
             android:text="Shipping"
-            android:textColor="@color/black"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -359,7 +347,6 @@
             android:fontFamily="@font/montserrat_semibold"
             android:text="$ 20.25"
             android:textAlignment="textEnd"
-            android:textColor="@color/black"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
@@ -389,6 +376,7 @@
             android:text="Pay  $532.37"
             android:textAllCaps="false"
             android:textSize="16sp"
+            android:textColor="@color/white"
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

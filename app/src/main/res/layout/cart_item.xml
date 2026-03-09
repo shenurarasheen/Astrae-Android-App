@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/cart_card_background">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cartCardView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         app:cardCornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +36,7 @@
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Title"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintStart_toEndOf="@+id/cartCardView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,8 +49,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="$ 512.45"
-        android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/cartCardView"
         app:layout_constraintTop_toBottomOf="@+id/cartItemTitle" />
 
@@ -62,7 +60,7 @@
         android:layout_marginStart="5dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="shipping : "
-        android:textColor="@color/gray_500"
+        android:textColor="@color/md_theme_secondary"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView7"
         app:layout_constraintStart_toEndOf="@+id/textView7"
@@ -74,7 +72,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_medium"
         android:text="$ 21.80"
-        android:textColor="@color/gray_500"
+        android:textColor="@color/md_theme_secondary"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView9"
         app:layout_constraintStart_toEndOf="@+id/textView9" />
@@ -96,8 +94,9 @@
         app:layout_constraintStart_toEndOf="@+id/cartCardView" />
 
     <LinearLayout
-        android:layout_width="110dp"
-        android:layout_height="35dp"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/cartCardView"
         app:layout_constraintEnd_toEndOf="parent">
@@ -122,9 +121,8 @@
             android:fontFamily="@font/montserrat_medium"
             android:gravity="center"
             android:inputType="text"
-            android:text="0"
+            android:text="1"
             android:textAlignment="center"
-            android:textColor="@color/black"
             android:textSize="13sp" />
 
         <ImageButton

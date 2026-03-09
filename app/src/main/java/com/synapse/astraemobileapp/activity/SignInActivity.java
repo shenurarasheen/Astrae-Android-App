@@ -43,6 +43,11 @@ public class SignInActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
+        //skip text click
+        binding.signinSkipText.setOnClickListener(v -> {
+            updateUi(HomeActivity.class);
+        });
+
         //handle password visibility
         PasswordUtils.togglePasswordVisibility(binding.signinPasswordInput);
 

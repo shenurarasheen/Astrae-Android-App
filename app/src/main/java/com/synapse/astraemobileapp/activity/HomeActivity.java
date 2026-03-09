@@ -125,6 +125,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (itemId == R.id.side_nav_add_product) {
 
+            if (auth.getCurrentUser() == null) {
+                updateActivity(SignInActivity.class, true);
+            } else {
+                updateActivity(AddProductActivity.class, true);
+            }
+
         } else if (itemId == R.id.side_nav_selling_products) {
 
         } else if (itemId == R.id.side_nav_login) {
@@ -140,10 +146,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void updateActivity(Class<? extends AppCompatActivity> activityClass, boolean needBack) {
+    private void updateActivity(Class<? extends AppCompatActivity> activityClass, boolean needToBack) {
         Intent intent = new Intent(HomeActivity.this, activityClass);
         startActivity(intent);
-        if (!needBack) {
+        if (!needToBack) {
             finish();
         }
     }

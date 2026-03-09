@@ -35,6 +35,11 @@ public class SignUpActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
+        //skip text click
+        binding.signupSkipText.setOnClickListener(v -> {
+            updateUi(HomeActivity.class);
+        });
+
         // handle password and confirm password visibility
         PasswordUtils.togglePasswordVisibility(binding.signupPasswordInput);
         PasswordUtils.togglePasswordVisibility(binding.signupConfirmPasswordInput);
@@ -156,5 +161,9 @@ public class SignUpActivity extends AppCompatActivity {
         finish();
     }
 
-
+    private void updateUi(Class<? extends AppCompatActivity> activityClass) {
+        Intent intent = new Intent(SignUpActivity.this, activityClass);
+        startActivity(intent);
+        finish();
+    }
 }

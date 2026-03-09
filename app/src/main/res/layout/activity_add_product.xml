@@ -51,8 +51,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:src="@drawable/ic_upload"/>
 
                     <TextView
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:text="Upload Product Images"
                         android:textAlignment="center"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:textColor="@color/md_theme_outline"
                         android:layout_marginTop="8dp"/>
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Adding 3 product images is required*"
-                android:textSize="11sp"
+                android:textSize="10sp"
                 android:textColor="@color/md_theme_outlineVariant"
                 android:textAlignment="textEnd"
                 android:fontFamily="@font/montserrat_semibold"/>
