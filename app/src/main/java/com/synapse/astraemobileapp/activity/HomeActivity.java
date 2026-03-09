@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.auth.User;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.databinding.ActivityHomeBinding;
+import com.synapse.astraemobileapp.fragment.CategoryFragment;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NavigationBarView.OnItemSelectedListener {
 
@@ -108,6 +109,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             sideNavMenu.findItem(R.id.side_nav_profile).setChecked(true);
 
         } else if (itemId == R.id.side_nav_category || itemId == R.id.bottom_nav_category) {
+
+            loadFragment(new CategoryFragment());
 
         } else if (itemId == R.id.side_nav_cart || itemId == R.id.bottom_nav_cart) {
 
