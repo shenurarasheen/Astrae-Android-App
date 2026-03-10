@@ -10,11 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.databinding.FragmentCategoryBinding;
+import com.synapse.astraemobileapp.databinding.ItemCartBinding;
+import com.synapse.astraemobileapp.databinding.ItemCategoryBinding;
 import com.synapse.astraemobileapp.model.Category;
 
 import java.util.List;
@@ -24,12 +31,16 @@ public class CategoryFragment extends Fragment {
     private FragmentCategoryBinding binding;
 
     private FirebaseFirestore db;
+    private FirebaseStorage storage;
+
+    private FlexboxLayout flexLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
     }
 
     @Override
@@ -37,6 +48,10 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCategoryBinding.inflate(inflater, container,false);
+
+        flexLayout = binding.categoryFlexboxContainer;
+
+
         return binding.getRoot();
     }
 
@@ -46,12 +61,43 @@ public class CategoryFragment extends Fragment {
 
         getAllCategories(categories -> {
             if (categories != null && !categories.isEmpty()) {
-                // need to set category items for flexbox layout
+                // set category items for flexbox layout
+                for (Category category: categories) {
+                    ItemCategoryBinding categoryBinding = ItemCategoryBinding.inflate(getLayoutInflater(), flexLayout, false);
+
+                    categoryBinding.categoryItemTitle.setText(category.getName());
+                    setCategoryImage(category, categoryBinding);
+
+                    FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
+                            FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                            FlexboxLayout.LayoutParams.WRAP_CONTENT
+                    );
+
+                    layoutParams.setMargins(0, 10, 10, 10);
+
+                    View rootView = categoryBinding.getRoot();
+                    rootView.setLayoutParams(layoutParams);
+
+                    flexLayout.addView(rootView);
+
+                }
+
             } else {
                 Toast.makeText(getContext(), "Failed to load categories", Toast.LENGTH_SHORT).show();
                 Log.e("CategoryFragment", "Failed to fetch categories or no categories found");
             }
         });
+    }
+
+    private void setCategoryImage(Category category, ItemCategoryBinding categoryBinding) {
+        storage.getReference(category.getImageUrl())
+                .getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Glide.with(getContext())
+                            .load(uri)
+                            .centerCrop()
+                            .into(categoryBinding.categoryItemImage);
+                });
     }
 
     private void getAllCategories(FirestoreCallback callback) {
