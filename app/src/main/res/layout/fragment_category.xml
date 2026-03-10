@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="15dp"
     android:orientation="vertical"
     tools:context=".fragment.CategoryFragment">
@@ -11,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="All Categories"
-        android:textSize="20sp"
+        android:textSize="19sp"
         android:fontFamily="@font/montserrat_semibold"/>
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/category_flexbox_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:flexWrap="wrap"
         android:layout_marginTop="15dp">
 
     </com.google.android.flexbox.FlexboxLayout>

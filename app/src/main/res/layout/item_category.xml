@@ -5,24 +5,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:background="@drawable/shape_category_item"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:background="@drawable/shape_category_item">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/necklace"
+        android:id="@+id/category_item_image"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/CircleImage"
         android:clipToOutline="true" />
 
     <TextView
+        android:id="@+id/category_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ladies Necklace"
-        android:textSize="15sp"
+        android:textSize="12sp"
         android:fontFamily="@font/montserrat_semibold"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"/>
 
 </LinearLayout>
