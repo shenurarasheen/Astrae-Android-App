@@ -77,7 +77,7 @@ public class CategoryFragment extends Fragment {
                             FlexboxLayout.LayoutParams.WRAP_CONTENT
                     );
 
-                    layoutParams.setMargins(0, 10, 10, 10);
+                    layoutParams.setMargins(0, 10, 15, 10);
 
                     View rootView = categoryBinding.getRoot();
                     rootView.setLayoutParams(layoutParams);

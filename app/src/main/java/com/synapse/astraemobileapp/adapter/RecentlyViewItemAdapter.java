@@ -3,12 +3,16 @@ package com.synapse.astraemobileapp.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.model.Product;
 
@@ -19,8 +23,11 @@ public class RecentlyViewItemAdapter extends RecyclerView.Adapter<RecentlyViewIt
 
     private List<Product> products;
 
+    private FirebaseStorage storage;
+
     public RecentlyViewItemAdapter(List<Product> products) {
         this.products = products;
+        storage = FirebaseStorage.getInstance();
     }
 
     @NonNull
@@ -34,8 +41,9 @@ public class RecentlyViewItemAdapter extends RecyclerView.Adapter<RecentlyViewIt
     @Override
     public void onBindViewHolder(@NonNull RecentlyViewItemViewHolder holder, int position) {
         Product product = products.get(position);
+        loadProductImage(holder.productImage, product.getProductImages().get(0));
         holder.productTitle.setText(product.getTitle());
-        holder.productDescription.setText(product.getDescription());
+        loadProductBadges(product.getAttributes(), holder.badgeContainer);
         holder.productPrice.setText(String.format(Locale.US, "LKR %,.2f", product.getPrice()));
     }
 
@@ -44,15 +52,42 @@ public class RecentlyViewItemAdapter extends RecyclerView.Adapter<RecentlyViewIt
         return products.size();
     }
 
+    private void loadProductImage(ImageView imageView, String imageUrl) {
+        storage.getReference("/" + imageUrl)
+                .getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Glide.with(imageView.getContext())
+                            .load(uri)
+                            .centerCrop()
+                            .into(imageView);
+                });
+    }
+
+    //need to set badges for product card here...
+    private void loadProductBadges(List<Product.Attribute> attributes, LinearLayout badgeContainer) {
+        LayoutInflater inflater = LayoutInflater.from(badgeContainer.getContext());
+
+        for (Product.Attribute attribute : attributes) {
+            attribute.getValues().forEach(value -> {
+                FrameLayout productBadge = (FrameLayout) inflater.inflate(R.layout.item_product_badge, null);
+                TextView badgeText = productBadge.findViewById(R.id.item_product_badge);
+                badgeText.setText(value);
+                badgeContainer.addView(productBadge);
+            });
+        }
+    }
+
     static class RecentlyViewItemViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        TextView productTitle, productDescription, productPrice;
+        TextView productTitle, productPrice;
+        LinearLayout badgeContainer;
+
         public RecentlyViewItemViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.item_product_image);
             productTitle = itemView.findViewById(R.id.item_product_title);
-            productDescription = itemView.findViewById(R.id.item_product_description);
             productPrice = itemView.findViewById(R.id.item_product_price);
+            badgeContainer = itemView.findViewById(R.id.item_product_badge_container);
         }
     }
 }
