@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +20,12 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
+import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
 import com.synapse.astraemobileapp.databinding.FragmentCategoryBinding;
 import com.synapse.astraemobileapp.databinding.ItemCartBinding;
 import com.synapse.astraemobileapp.databinding.ItemCategoryBinding;
 import com.synapse.astraemobileapp.model.Category;
+import com.synapse.astraemobileapp.model.Product;
 
 import java.util.List;
 
@@ -59,6 +62,7 @@ public class CategoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //load categories
         getAllCategories(categories -> {
             if (categories != null && !categories.isEmpty()) {
                 // set category items for flexbox layout
@@ -87,6 +91,31 @@ public class CategoryFragment extends Fragment {
                 Log.e("CategoryFragment", "Failed to fetch categories or no categories found");
             }
         });
+
+
+        // load recently viewed items (for testing load all products)
+        loadAllProducts();
+
+    }
+
+    private void loadAllProducts() {
+        db.collection("products").get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Product> products = task.getResult().toObjects(Product.class);
+
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                        binding.categoryRecentlyViewedItemsSection.itemSectionRecyclerView.setLayoutManager(layoutManager);
+
+                        RecentlyViewItemAdapter itemAdapter = new RecentlyViewItemAdapter(products);
+
+                        binding.categoryRecentlyViewedItemsSection.itemSectionTitle.setText("Recently Viewed Items");
+                        binding.categoryRecentlyViewedItemsSection.itemSectionRecyclerView.setAdapter(itemAdapter);
+
+                    } else {
+                        Toast.makeText(getContext(), "Failed to load products", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void setCategoryImage(Category category, ItemCategoryBinding categoryBinding) {

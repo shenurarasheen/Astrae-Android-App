@@ -12,6 +12,7 @@
 
 
         <ImageView
+            android:id="@+id/item_product_image"
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:adjustViewBounds="true"
@@ -34,15 +35,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/item_product_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_bold"
                     android:maxLines="2"
                     android:text="Ladies necklace with pendant"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
 
                 <LinearLayout
+                    android:id="@+id/item_product_badge_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
@@ -84,6 +87,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/item_product_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -91,7 +95,7 @@
                     android:fontFamily="@font/montserrat_semibold"
                     android:maxLines="2"
                     android:text="Women'S Stylish Pendant Necklace Featuring a Easy And Elegant Design with Faux Zinc Alloy Pendant, Perfect for Vacations And Everyday Wear"
-                    android:textColor="@color/md_theme_onSecondaryFixedVariant"
+                    android:textColor="@color/md_theme_outline"
                     android:textSize="11sp" />
 
                 <LinearLayout
@@ -116,6 +120,7 @@
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/item_product_price"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
