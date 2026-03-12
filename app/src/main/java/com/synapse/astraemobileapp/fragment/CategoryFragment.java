@@ -24,6 +24,7 @@ import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
 import com.synapse.astraemobileapp.databinding.FragmentCategoryBinding;
 import com.synapse.astraemobileapp.databinding.ItemCartBinding;
 import com.synapse.astraemobileapp.databinding.ItemCategoryBinding;
+import com.synapse.astraemobileapp.libs.ProductSamples;
 import com.synapse.astraemobileapp.model.Category;
 import com.synapse.astraemobileapp.model.Product;
 
@@ -53,7 +54,6 @@ public class CategoryFragment extends Fragment {
         binding = FragmentCategoryBinding.inflate(inflater, container,false);
 
         flexLayout = binding.categoryFlexboxContainer;
-
 
         return binding.getRoot();
     }

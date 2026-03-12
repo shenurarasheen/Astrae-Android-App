@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.model.Product;
@@ -44,7 +45,7 @@ public class RecentlyViewItemAdapter extends RecyclerView.Adapter<RecentlyViewIt
         loadProductImage(holder.productImage, product.getProductImages().get(0));
         holder.productTitle.setText(product.getTitle());
         loadProductBadges(product.getAttributes(), holder.badgeContainer);
-        holder.productPrice.setText(String.format(Locale.US, "LKR %,.2f", product.getPrice()));
+        holder.productPrice.setText(String.format(Locale.US, "%,.2f", product.getPrice()));
     }
 
     @Override
@@ -64,23 +65,26 @@ public class RecentlyViewItemAdapter extends RecyclerView.Adapter<RecentlyViewIt
     }
 
     //need to set badges for product card here...
-    private void loadProductBadges(List<Product.Attribute> attributes, LinearLayout badgeContainer) {
+    private void loadProductBadges(List<Product.Attribute> attributes, FlexboxLayout badgeContainer) {
+
+        badgeContainer.removeAllViews();
+
+        if (attributes == null || attributes.isEmpty()) return;
+
         LayoutInflater inflater = LayoutInflater.from(badgeContainer.getContext());
 
         for (Product.Attribute attribute : attributes) {
-            attribute.getValues().forEach(value -> {
-                FrameLayout productBadge = (FrameLayout) inflater.inflate(R.layout.item_product_badge, null);
-                TextView badgeText = productBadge.findViewById(R.id.item_product_badge);
-                badgeText.setText(value);
-                badgeContainer.addView(productBadge);
-            });
+            FrameLayout productBadge = (FrameLayout) inflater.inflate(R.layout.item_product_badge, null);
+            TextView badgeText = productBadge.findViewById(R.id.item_product_badge);
+            badgeText.setText(attribute.getValues().get(0));
+            badgeContainer.addView(productBadge);
         }
     }
 
     static class RecentlyViewItemViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         TextView productTitle, productPrice;
-        LinearLayout badgeContainer;
+        FlexboxLayout badgeContainer;
 
         public RecentlyViewItemViewHolder(@NonNull View itemView) {
             super(itemView);
