@@ -31,7 +31,6 @@ public class Product {
     @Builder
     public static class Attribute {
         private String name;
-        private String type;
         private List<String> values;
     }
 }
