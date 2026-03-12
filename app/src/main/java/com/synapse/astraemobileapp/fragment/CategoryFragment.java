@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,6 +83,11 @@ public class CategoryFragment extends Fragment {
                     View rootView = categoryBinding.getRoot();
                     rootView.setLayoutParams(layoutParams);
 
+                    //set onclick listener for categories
+                    rootView.setOnClickListener(v -> {
+                        loadListingFragment(category.getCategoryId(), category.getName());
+                    });
+
                     flexLayout.addView(rootView);
 
                 }
@@ -96,6 +102,20 @@ public class CategoryFragment extends Fragment {
         // load recently viewed items (for testing load all products)
         loadAllProducts();
 
+    }
+
+    private void loadListingFragment(String categoryId, String categoryName) {
+        Bundle bundle = new Bundle();
+        bundle.putString("categoryId", categoryId);
+        bundle.putString("categoryName", categoryName);
+
+        ListingFragment fragment = new ListingFragment();
+        fragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void loadAllProducts() {
