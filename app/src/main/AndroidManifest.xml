@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AstraeMobileApp">
         <activity
+            android:name=".activity.SellerDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ProductDetailsActivity"
             android:exported="false" />
         <activity
