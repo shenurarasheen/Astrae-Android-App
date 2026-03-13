@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/main_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_btn_panel">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/product_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="360dp" />
+
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dots_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                app:dotsColor="@color/sky_200"
+                app:dotsSize="8dp"
+                app:dotsSpacing="4dp"
+                app:dotsCornerRadius="8dp"
+                app:selectedDotColor="@color/sky_500"
+                app:progressMode="true"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/single_product_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Women stylish gold necklace with pendant"
+                    android:textSize="18sp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    />
+
+                <TextView
+                    android:id="@+id/single_product_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Women'S Stylish Pendant Necklace Featuring a Easy And Elegant Design with Faux Zinc Alloy Pendant, Perfect for Vacations And Everyday Wear"
+                    android:textSize="13sp"
+                    android:ellipsize="end"
+                    android:maxLines="4"/>
+
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/single_product_badge_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="4dp"
+                        android:background="@drawable/shape_sold_count_badge">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_spv_flame"/>
+
+                        <TextView
+                            android:id="@+id/single_product_sold_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sold 20+"
+                            android:textSize="11sp"
+                            android:textColor="@color/sky_500"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginStart="3dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="|  Sold by"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/montserrat_medium"/>
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/single_product_seller"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="4dp"
+                            android:src="@drawable/img_default_profile"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/shape_circle_image"
+                            app:shapeAppearanceOverlay="@style/CircleImage"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text=">"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        android:layout_marginStart="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.5"
+                            android:textSize="12sp"
+                            android:textColor="#eab308"
+                            android:layout_marginEnd="5dp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                        <RatingBar
+                            android:id="@+id/single_product_rating"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:rating="4.5"
+                            android:progressTint="#eab308" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/single_product_estimate_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="9947.74"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Est."
+                        android:layout_marginStart="6dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LKR"
+                        android:layout_marginStart="10dp"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <TextView
+                        android:id="@+id/single_product_real_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9520.30"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
+
+
+                <!--Quantity input-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Qty"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:background="@drawable/shape_quantity_selector"
+                            android:gravity="center"
+                            android:paddingHorizontal="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/single_product_minus_qty_btn"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:gravity="center"
+                                android:text="−"
+                                android:textColor="@color/sky_400"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/montserrat_semibold" />
+
+                            <TextView
+                                android:id="@+id/single_product_qty"
+                                android:layout_width="34dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/montserrat_bold" />
+
+                            <TextView
+                                android:id="@+id/single_product_plus_qty_btn"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:gravity="center"
+                                android:text="+"
+                                android:textColor="@color/sky_400"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/montserrat_semibold" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="30dp">
+
+                            <TextView
+                                android:id="@+id/single_product_view_certificate_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="View Certificate >"
+                                android:textSize="11.5sp"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:textColor="@color/sky_400"
+                                android:background="@drawable/shape_view_certificate_btn"
+                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="6dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- FloatingActionButton placed above the ViewPager2 (top-end). Aligns to the NestedScrollView top so it overlays the top child (the ViewPager) -->
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/single_product_back_btn"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:fabCustomSize="50dp"-->
+<!--        android:layout_alignTop="@id/main_scroll"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        app:maxImageSize="24dp"-->
+<!--        app:srcCompat="@drawable/back2"-->
+<!--        android:scaleType="center"-->
+<!--        app:shapeAppearanceOverlay="@style/CircleImage"-->
+<!--        android:background="@drawable/bg_cart_icon" />-->
+
+
+    <FrameLayout
+        android:id="@+id/single_product_back_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/shape_single_product_back_btn"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/back2"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_btn_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_single_product_button_footer"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/single_product_add_to_cart_btn"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:text="Add to cart"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_semibold"
+            android:backgroundTint="@color/btn_blue"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"/>
+
+        <Button
+            android:id="@+id/single_product_buy_now_btn"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="Buy now"
+            android:textColor="@color/btn_blue"
+            app:strokeColor="@color/btn_blue"
+            app:strokeWidth="1.3dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

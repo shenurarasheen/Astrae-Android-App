@@ -1,5 +1,6 @@
 package com.synapse.astraemobileapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
+import com.synapse.astraemobileapp.activity.ProductDetailsActivity;
 import com.synapse.astraemobileapp.adapter.ListingAdapter;
 import com.synapse.astraemobileapp.databinding.FragmentListingBinding;
 import com.synapse.astraemobileapp.model.Product;
@@ -70,7 +72,12 @@ public class ListingFragment extends Fragment {
                     if (!ds.isEmpty()) {
                         List<Product> products = ds.toObjects(Product.class);
 
-                        ListingAdapter listingAdapter = new ListingAdapter(products);
+                        ListingAdapter listingAdapter = new ListingAdapter(products, product -> {
+                            Intent intent = new Intent(getContext(), ProductDetailsActivity.class);
+                            intent.putExtra("productId", product.getProductId());
+                            startActivity(intent);
+                        });
+
                         binding.listingCategoryProductContainer.setAdapter(listingAdapter);
                     } else {
                         Log.i("ListingFragment", "No products to load.");
