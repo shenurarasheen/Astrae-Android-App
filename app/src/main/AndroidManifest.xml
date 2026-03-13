@@ -11,43 +11,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AstraeMobileApp">
-
+        <activity
+            android:name=".activity.ProductDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.AddProductActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".activity.ProfileActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".activity.SignUpActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.SignInActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.HomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".activity.PaymentDetailsActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.CartActivity"
             android:exported="false" />

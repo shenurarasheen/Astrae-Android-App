@@ -44,10 +44,10 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             app:menu="@menu/bottom_nav_menu"
             app:itemIconTint="@color/md_theme_secondary"
-            app:labelVisibilityMode="labeled"
+            app:labelVisibilityMode="unlabeled"
             app:itemIconSize="25dp"/>
 
     </LinearLayout>

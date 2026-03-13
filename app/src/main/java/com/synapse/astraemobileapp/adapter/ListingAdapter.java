@@ -1,11 +1,13 @@
 package com.synapse.astraemobileapp.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +27,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     private List<Product> products;
     private FirebaseStorage storage;
 
-    public ListingAdapter(List<Product> products) {
+    private OnProductClickListener listner;
+
+    public ListingAdapter(List<Product> products, OnProductClickListener listner) {
         this.products = products;
+        this.listner = listner;
         storage = FirebaseStorage.getInstance();
     }
 
@@ -45,6 +50,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         holder.productTitle.setText(product.getTitle());
         loadProductBadges(product.getAttributes(), holder.badgeContainer);
         holder.productPrice.setText(String.format(Locale.US, "%,.2f", product.getPrice()));
+
+        //set click listener for product card image
+        holder.productImage.setOnClickListener(view -> {
+            listner.onProductClick(product);
+        });
     }
 
     @Override
@@ -94,5 +104,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
             productPrice = itemView.findViewById(R.id.item_product_price);
             badgeContainer = itemView.findViewById(R.id.item_product_badge_container);
         }
+    }
+
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
     }
 }
