@@ -103,6 +103,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="Price"
+                            android:textColor="@color/md_theme_outline"
                             android:textAllCaps="true"
                             android:textSize="9sp" />
 
