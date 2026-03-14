@@ -34,7 +34,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ActivityProductDetailsBinding binding;
     private FirebaseFirestore db;
-    private FirebaseStorage storage;
 
     private String productId;
 
@@ -51,7 +50,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productId = intent.getStringExtra("productId");
 
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
 //            RenderEffect blurEffect = RenderEffect.createBlurEffect(
