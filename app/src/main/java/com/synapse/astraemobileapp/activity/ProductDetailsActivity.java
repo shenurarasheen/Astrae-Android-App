@@ -16,12 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.adapter.ProductSliderAdapter;
+import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityProductDetailsBinding;
 import com.synapse.astraemobileapp.model.Product;
 
@@ -55,7 +57,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //            RenderEffect blurEffect = RenderEffect.createBlurEffect(
 //                    25f, 25f, Shader.TileMode.CLAMP
 //            );
-//
 //            binding.bottomBtnPanel.setRenderEffect(blurEffect);
 //        }
 
@@ -71,6 +72,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     if (!qds.isEmpty()) {
                         Product product = qds.toObjects(Product.class).get(0);
                         setProductDataToLayout(product);
+                        loadAllSimilarProducts(product);
                     } else {
                         Log.e("ProductDetailsActivity", "No such a product from product id : " + productId);
                     }
@@ -157,5 +159,30 @@ public class ProductDetailsActivity extends AppCompatActivity {
             badgeText.setText(attribute.getValues().get(0));
             badgeContainer.addView(productBadge);
         }
+    }
+
+
+    private void loadAllSimilarProducts(Product product) {
+        db.collection("products")
+                .whereEqualTo("categoryId", product.getCategoryId())
+                .whereNotEqualTo("productId", product.getProductId())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Product> products = task.getResult().toObjects(Product.class);
+
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+                        binding.similarProductItemsSection.itemSectionRecyclerView.setLayoutManager(layoutManager);
+
+                        RecentlyViewItemAdapter itemAdapter = new RecentlyViewItemAdapter(products);
+
+                        binding.similarProductItemsSection.itemSectionTitle.setText("More Similar Items");
+                        binding.similarProductItemsSection.itemSectionRecyclerView.setAdapter(itemAdapter);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Failed to load products", Toast.LENGTH_SHORT).show();
+                        Log.e("ProductDetailsActivity", "Failed to load product details " + task.getException().getMessage());
+                    }
+                });
     }
 }
