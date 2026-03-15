@@ -69,6 +69,8 @@ public class SellerDetailsActivity extends AppCompatActivity {
             });
 
             binding.sellerDetailsProductRecyclerView.setAdapter(adapter);
+
+            binding.sellerDetailsItemCount.setText("All items (" + products.size() + ")");
         });
 
     }

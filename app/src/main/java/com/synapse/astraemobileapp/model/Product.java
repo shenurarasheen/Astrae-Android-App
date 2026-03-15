@@ -23,6 +23,8 @@ public class Product {
     private String certificateImage;
     private boolean status;
     private float rating;
+    private int soldCount;
+    private int viewedCount;
     private List<Attribute> attributes;
 
     @Data

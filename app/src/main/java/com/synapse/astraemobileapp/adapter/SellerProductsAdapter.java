@@ -48,6 +48,8 @@ public class SellerProductsAdapter extends RecyclerView.Adapter<SellerProductsAd
         holder.itemImage.setOnClickListener(v -> {
             sellerProductListener.onSellerProductClick(product);
         });
+
+        holder.viewCount.setText(String.valueOf(product.getViewedCount()));
     }
 
     @Override
