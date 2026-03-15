@@ -25,9 +25,12 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
 
     private FirebaseStorage storage;
 
-    public SimilarItemsAdapter(List<Product> products) {
+    private SimilarProductOnClickListener listener;
+
+    public SimilarItemsAdapter(List<Product> products, SimilarProductOnClickListener listener) {
         this.products = products;
-        storage = FirebaseStorage.getInstance();
+        this.storage = FirebaseStorage.getInstance();
+        this.listener = listener;
     }
 
     @NonNull
@@ -45,6 +48,11 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
         holder.productTitle.setText(product.getTitle());
         loadProductBadges(product.getAttributes(), holder.badgeContainer);
         holder.productPrice.setText(String.format(Locale.US, "%,.2f", product.getPrice()));
+
+        // attach listener for product image
+        holder.productImage.setOnClickListener(v -> {
+            listener.onSimilarProductClick(product);
+        });
     }
 
     @Override
@@ -92,5 +100,9 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
             productPrice = itemView.findViewById(R.id.item_product_price);
             badgeContainer = itemView.findViewById(R.id.item_product_badge_container);
         }
+    }
+
+    public interface SimilarProductOnClickListener {
+        void onSimilarProductClick(Product product);
     }
 }

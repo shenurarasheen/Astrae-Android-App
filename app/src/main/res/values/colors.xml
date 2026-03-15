@@ -178,4 +178,6 @@
     <color name="glass_start">#4D38BDF8</color>
     <color name="glass_center">#267DD3F2</color>
     <color name="glass_end">#12FFFFFF</color>
+
+    <color name="free_shipping_text_color">#00C853</color>
 </resources>

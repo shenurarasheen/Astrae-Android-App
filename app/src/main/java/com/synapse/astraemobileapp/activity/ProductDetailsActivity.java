@@ -1,5 +1,6 @@
 package com.synapse.astraemobileapp.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.RenderEffect;
@@ -19,11 +20,14 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.adapter.ProductSliderAdapter;
 import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
+import com.synapse.astraemobileapp.adapter.SimilarItemsAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityProductDetailsBinding;
 import com.synapse.astraemobileapp.model.Product;
 
@@ -35,8 +39,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private ActivityProductDetailsBinding binding;
     private FirebaseFirestore db;
 
-    private String productId;
-
     private int qty = 1;
 
     @Override
@@ -46,10 +48,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         binding = ActivityProductDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Intent intent = getIntent();
-        productId = intent.getStringExtra("productId");
-
         db = FirebaseFirestore.getInstance();
+
+
+        Intent intent = getIntent();
+        String productId = intent.getStringExtra("productId");
+
+        loadProductData(productId);
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
 //            RenderEffect blurEffect = RenderEffect.createBlurEffect(
@@ -58,11 +63,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //            binding.bottomBtnPanel.setRenderEffect(blurEffect);
 //        }
 
-        loadProductData();
     }
 
-    private void loadProductData() {
-
+    private void loadProductData(String productId) {
         db.collection("products")
                 .whereEqualTo("productId", productId)
                 .get()
@@ -71,6 +74,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         Product product = qds.toObjects(Product.class).get(0);
                         setProductDataToLayout(product);
                         loadAllSimilarProducts(product);
+
+                        updateProductViewedCount(productId);
                     } else {
                         Log.e("ProductDetailsActivity", "No such a product from product id : " + productId);
                     }
@@ -80,6 +85,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 });
     }
 
+    @SuppressLint("SetTextI18n")
     private void setProductDataToLayout(Product product) {
         ProductSliderAdapter adapter = new ProductSliderAdapter(product.getProductImages());
         binding.productViewpager.setAdapter(adapter);
@@ -95,6 +101,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
             intent.putExtra("sellerId", product.getSellerId());
             startActivity(intent);
         });
+
+        binding.singleProductSoldCount.setText("Sold " + product.getSoldCount() + "+");
+
+        binding.singleProductRating.setRating(product.getRating());
+        binding.singleProductRatingValue.setText(String.format(Locale.US,"%.1f", product.getRating()));
 
         //draw a line through across the estimate price
         binding.singleProductEstimatePrice.setPaintFlags(binding.singleProductEstimatePrice.getPaintFlags() |
@@ -115,7 +126,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private double calculateEstimatePrice(double realPrice) {
-        return (realPrice * 20 /100) + realPrice;
+        return (realPrice * 10 /100) + realPrice;
     }
 
     private void incrementQty(int productQty) {
@@ -172,7 +183,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                         binding.similarProductItemsSection.itemSectionRecyclerView.setLayoutManager(layoutManager);
 
-                        RecentlyViewItemAdapter itemAdapter = new RecentlyViewItemAdapter(products);
+                        SimilarItemsAdapter itemAdapter = new SimilarItemsAdapter(products, similarProduct -> {
+                            loadProductData(similarProduct.getProductId());
+                        });
 
                         binding.similarProductItemsSection.itemSectionTitle.setText("More Similar Items");
                         binding.similarProductItemsSection.itemSectionRecyclerView.setAdapter(itemAdapter);
@@ -182,5 +195,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         Log.e("ProductDetailsActivity", "Failed to load product details " + task.getException().getMessage());
                     }
                 });
+    }
+
+    private void updateProductViewedCount(String productId) {
+        db.collection("products")
+                .whereEqualTo("productId", productId)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(qds -> {
+                    for (DocumentSnapshot doc : qds) {
+                        doc.getReference().update("viewedCount", FieldValue.increment(1));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("ProductDetailsActivity", "Update failed", e));
     }
 }

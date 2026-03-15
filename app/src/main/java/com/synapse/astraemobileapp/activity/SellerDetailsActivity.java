@@ -61,8 +61,16 @@ public class SellerDetailsActivity extends AppCompatActivity {
 
         //load seller products to the linear layout
         getAllSellerProducts(products -> {
-            SellerProductsAdapter adapter = new SellerProductsAdapter(products);
+
+            SellerProductsAdapter adapter = new SellerProductsAdapter(products, product -> {
+                Intent toProductDetailsIntent = new Intent(SellerDetailsActivity.this, ProductDetailsActivity.class);
+                toProductDetailsIntent.putExtra("productId", product.getProductId());
+                startActivity(toProductDetailsIntent);
+            });
+
             binding.sellerDetailsProductRecyclerView.setAdapter(adapter);
+
+            binding.sellerDetailsItemCount.setText("All items (" + products.size() + ")");
         });
 
     }

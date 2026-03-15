@@ -130,13 +130,12 @@
                             android:src="@drawable/img_default_profile"
                             app:shapeAppearanceOverlay="@style/CircleImage" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text=">"
-                            android:textSize="16sp" />
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_right_arrow"
+                            android:layout_marginStart="6dp"
+                            android:contentDescription="right arrow"/>
 
                     </LinearLayout>
 
@@ -148,6 +147,7 @@
                         android:gravity="end|center_vertical">
 
                         <TextView
+                            android:id="@+id/single_product_rating_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="5dp"
@@ -181,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="9947.74"
-                        android:textSize="20sp" />
+                        android:textSize="19sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -189,12 +189,12 @@
                         android:layout_marginStart="6dp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="Est."
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="LKR"
                         android:textSize="17sp" />
@@ -206,7 +206,7 @@
                         android:layout_marginStart="5dp"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="9520.30"
-                        android:textSize="20sp" />
+                        android:textSize="19sp" />
                 </LinearLayout>
 
 
