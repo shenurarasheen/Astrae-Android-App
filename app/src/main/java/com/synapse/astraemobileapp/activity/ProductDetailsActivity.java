@@ -24,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.adapter.ProductSliderAdapter;
 import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
+import com.synapse.astraemobileapp.adapter.SimilarItemsAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityProductDetailsBinding;
 import com.synapse.astraemobileapp.model.Product;
 
@@ -35,8 +36,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private ActivityProductDetailsBinding binding;
     private FirebaseFirestore db;
 
-    private String productId;
-
     private int qty = 1;
 
     @Override
@@ -46,10 +45,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         binding = ActivityProductDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Intent intent = getIntent();
-        productId = intent.getStringExtra("productId");
-
         db = FirebaseFirestore.getInstance();
+
+        Intent intent = getIntent();
+        loadProductData(intent.getStringExtra("productId"));
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
 //            RenderEffect blurEffect = RenderEffect.createBlurEffect(
@@ -58,10 +57,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //            binding.bottomBtnPanel.setRenderEffect(blurEffect);
 //        }
 
-        loadProductData();
     }
 
-    private void loadProductData() {
+    private void loadProductData(String productId) {
 
         db.collection("products")
                 .whereEqualTo("productId", productId)
@@ -115,7 +113,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private double calculateEstimatePrice(double realPrice) {
-        return (realPrice * 20 /100) + realPrice;
+        return (realPrice * 10 /100) + realPrice;
     }
 
     private void incrementQty(int productQty) {
@@ -172,7 +170,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
                         binding.similarProductItemsSection.itemSectionRecyclerView.setLayoutManager(layoutManager);
 
-                        RecentlyViewItemAdapter itemAdapter = new RecentlyViewItemAdapter(products);
+                        SimilarItemsAdapter itemAdapter = new SimilarItemsAdapter(products, similarProduct -> {
+                            loadProductData(similarProduct.getProductId());
+                        });
 
                         binding.similarProductItemsSection.itemSectionTitle.setText("More Similar Items");
                         binding.similarProductItemsSection.itemSectionRecyclerView.setAdapter(itemAdapter);

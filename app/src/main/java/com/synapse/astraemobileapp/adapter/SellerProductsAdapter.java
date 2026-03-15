@@ -1,5 +1,6 @@
 package com.synapse.astraemobileapp.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,12 @@ public class SellerProductsAdapter extends RecyclerView.Adapter<SellerProductsAd
 
     private FirebaseStorage storage;
 
-    public SellerProductsAdapter(List<Product> products) {
+    private SellerProductOnClickListener sellerProductListener;
+
+    public SellerProductsAdapter(List<Product> products, SellerProductOnClickListener listener) {
         this.products = products;
-        storage = FirebaseStorage.getInstance();
+        this.storage = FirebaseStorage.getInstance();
+        this.sellerProductListener = listener;
     }
 
     @NonNull
@@ -40,6 +44,10 @@ public class SellerProductsAdapter extends RecyclerView.Adapter<SellerProductsAd
     public void onBindViewHolder(@NonNull SellerProductsViewHolder holder, int position) {
         Product product = products.get(position);
         loadProductImage(holder.itemImage, product.getProductImages().get(0));
+
+        holder.itemImage.setOnClickListener(v -> {
+            sellerProductListener.onSellerProductClick(product);
+        });
     }
 
     @Override
@@ -67,5 +75,9 @@ public class SellerProductsAdapter extends RecyclerView.Adapter<SellerProductsAd
             itemImage = itemView.findViewById(R.id.seller_product_item_image);
             viewCount = itemView.findViewById(R.id.seller_product_item_view_count);
         }
+    }
+
+    public interface SellerProductOnClickListener {
+        void onSellerProductClick(Product product);
     }
 }
