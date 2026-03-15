@@ -40,12 +40,31 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Items (10)"
+            android:textSize="12sp"
+            android:gravity="end"
+            android:textColor="@color/btn_blue"
+            android:fontFamily="@font/montserrat_medium"/>
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartRecyclerView"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="16dp"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
@@ -81,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Shipping : $ 20.34"
+                android:text="Shipping : LKR 0.00"
                 android:textColor="@color/md_theme_secondary"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +138,7 @@
             android:layout_height="70dp"
             android:backgroundTint="@color/blue_600"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="Chekout"
+            android:text="Checkout"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:cornerRadius="50dp" />
