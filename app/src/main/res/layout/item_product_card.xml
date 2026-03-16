@@ -143,6 +143,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/item_product_add_to_cart"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignTop="@+id/product_card_container"

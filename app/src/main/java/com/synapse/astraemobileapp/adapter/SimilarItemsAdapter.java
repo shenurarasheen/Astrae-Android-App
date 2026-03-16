@@ -15,6 +15,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.model.Product;
+import com.synapse.astraemobileapp.repository.CartRepository;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,6 +28,9 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
 
     private SimilarProductOnClickListener listener;
 
+    private CartRepository cartRepo;
+    private static final int SINGLE_PRODUCT_QTY = 1;
+
     public SimilarItemsAdapter(List<Product> products, SimilarProductOnClickListener listener) {
         this.products = products;
         this.storage = FirebaseStorage.getInstance();
@@ -38,6 +42,9 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
     public SimilarItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_product_card, parent, false);
+
+        this.cartRepo = new CartRepository(parent.getContext());
+
         return new SimilarItemViewHolder(view);
     }
 
@@ -52,6 +59,10 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
         // attach listener for product image
         holder.productImage.setOnClickListener(v -> {
             listener.onSimilarProductClick(product);
+        });
+
+        holder.addToCart.setOnClickListener(v -> {
+            cartRepo.addToCart(product, SimilarItemsAdapter.SINGLE_PRODUCT_QTY);
         });
     }
 
@@ -89,7 +100,7 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
     }
 
     static class SimilarItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView productImage;
+        ImageView productImage, addToCart;
         TextView productTitle, productPrice;
         FlexboxLayout badgeContainer;
 
@@ -99,6 +110,8 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
             productTitle = itemView.findViewById(R.id.item_product_title);
             productPrice = itemView.findViewById(R.id.item_product_price);
             badgeContainer = itemView.findViewById(R.id.item_product_badge_container);
+
+            addToCart = itemView.findViewById(R.id.item_product_add_to_cart);
         }
     }
 

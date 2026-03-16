@@ -30,6 +30,7 @@ import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
 import com.synapse.astraemobileapp.adapter.SimilarItemsAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityProductDetailsBinding;
 import com.synapse.astraemobileapp.model.Product;
+import com.synapse.astraemobileapp.repository.CartRepository;
 
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +39,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ActivityProductDetailsBinding binding;
     private FirebaseFirestore db;
+
+    private CartRepository cartRepo;
 
     private int qty = 1;
 
@@ -49,7 +52,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         db = FirebaseFirestore.getInstance();
-
+        cartRepo = new CartRepository(this);
 
         Intent intent = getIntent();
         String productId = intent.getStringExtra("productId");
@@ -122,6 +125,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         binding.singleProductMinusQtyBtn.setOnClickListener(v -> {
             decrementQty();
+        });
+
+        binding.singleProductAddToCartBtn.setOnClickListener(v -> {
+            int qty =  Integer.parseInt(binding.singleProductQty.getText().toString());
+            cartRepo.addToCart(product, qty);
         });
     }
 
