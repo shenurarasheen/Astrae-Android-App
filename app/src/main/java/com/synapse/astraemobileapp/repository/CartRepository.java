@@ -111,25 +111,6 @@ public class CartRepository {
                 .addOnSuccessListener(qds -> {
                     List<CartItem> cartItems = qds.toObjects(CartItem.class);
                     callback.callback(cartItems);
-
-//                    if (cartItems.isEmpty()) {
-//                        Toast.makeText(context, "No cart items available", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-
-//                    List<String> productIds = new ArrayList<>();
-//                    cartItems.forEach(item -> {
-//                        productIds.add(item.getProductId());
-//                    });
-
-//                    db.collection("products")
-//                            .whereIn("productId", productIds)
-//                            .get()
-//                            .addOnSuccessListener(qs -> {
-//                                List<Product> products = qs.toObjects(Product.class);
-//                                callback.callback(products);
-//                            })
-//                            .addOnFailureListener(e -> Log.e("CartRepository", "Failed to get products from cart items. " + e));
                 })
                 .addOnFailureListener(e -> Log.e("CartRepository", "Failed to retrieve cart items."));
     }

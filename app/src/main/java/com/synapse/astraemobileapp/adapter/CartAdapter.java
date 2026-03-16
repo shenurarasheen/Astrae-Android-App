@@ -36,7 +36,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private ItemRemoveCallback callback;
 
-    private int qty = 1;
+    private int qty;
     public CartAdapter(List<CartItem> cartItems, Context context, ItemRemoveCallback callback) {
         this.cartItems = cartItems;
         this.storage = FirebaseStorage.getInstance();
@@ -70,7 +70,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 incrementQty(product, holder);
             });
 
-            holder.itemQty.setText(item.getQuantity());
+            holder.itemQty.setText(String.valueOf(item.getQuantity()));
+            this.qty = item.getQuantity();
 
             holder.deleteBtn.setOnClickListener(v -> {
                 cartRepo.deleteCartItem(item.getDocumentId());
