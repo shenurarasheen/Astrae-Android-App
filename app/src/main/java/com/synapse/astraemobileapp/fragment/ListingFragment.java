@@ -12,15 +12,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.activity.ProductDetailsActivity;
+import com.synapse.astraemobileapp.activity.SignInActivity;
 import com.synapse.astraemobileapp.adapter.ListingAdapter;
 import com.synapse.astraemobileapp.databinding.FragmentListingBinding;
+import com.synapse.astraemobileapp.model.CartItem;
 import com.synapse.astraemobileapp.model.Product;
 
 import java.util.List;
@@ -32,12 +38,14 @@ public class ListingFragment extends Fragment {
     private String categoryName;
 
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         if (getArguments() != null) {
             categoryId = getArguments().getString("categoryId");
@@ -79,6 +87,8 @@ public class ListingFragment extends Fragment {
                         });
 
                         binding.listingCategoryProductContainer.setAdapter(listingAdapter);
+
+
                     } else {
                         Log.i("ListingFragment", "No products to load.");
                     }
@@ -87,4 +97,5 @@ public class ListingFragment extends Fragment {
                     Log.e("ListingFragment", "Failed to retrieve data from database " + e.getMessage());
                 });
     }
+
 }

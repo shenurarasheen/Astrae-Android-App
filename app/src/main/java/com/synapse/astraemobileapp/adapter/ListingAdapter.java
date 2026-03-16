@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.model.Product;
+import com.synapse.astraemobileapp.repository.CartRepository;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,12 +28,16 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     private List<Product> products;
     private FirebaseStorage storage;
 
-    private OnProductClickListener listner;
+    private OnProductClickListener productListner;
 
-    public ListingAdapter(List<Product> products, OnProductClickListener listner) {
+    private CartRepository cartRepo;
+
+    private static final int SINGLE_PRODUCT_QUANTITY = 1;
+
+    public ListingAdapter(List<Product> products, OnProductClickListener productListener){
         this.products = products;
-        this.listner = listner;
-        storage = FirebaseStorage.getInstance();
+        this.productListner = productListener;
+        this.storage = FirebaseStorage.getInstance();
     }
 
     @NonNull
@@ -40,6 +45,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     public ListingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_product_card, parent, false);
+
+        this.cartRepo = new CartRepository(parent.getContext());
+
         return new ListingViewHolder(view);
     }
 
@@ -53,7 +61,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
 
         //set click listener for product card image
         holder.productImage.setOnClickListener(view -> {
-            listner.onProductClick(product);
+            productListner.onProductClick(product);
+        });
+
+        holder.addToCart.setOnClickListener(view -> {
+            cartRepo.addToCart(product, ListingAdapter.SINGLE_PRODUCT_QUANTITY);
         });
     }
 
@@ -93,7 +105,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     static class ListingViewHolder extends RecyclerView.ViewHolder {
 
         TextView productTitle, productPrice;
-        ImageView productImage;
+        ImageView productImage, addToCart;
         FlexboxLayout badgeContainer;
 
         public ListingViewHolder(@NonNull View itemView) {
@@ -103,10 +115,12 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
             productImage = itemView.findViewById(R.id.item_product_image);
             productPrice = itemView.findViewById(R.id.item_product_price);
             badgeContainer = itemView.findViewById(R.id.item_product_badge_container);
+            addToCart = itemView.findViewById(R.id.item_product_add_to_cart);
         }
     }
 
     public interface OnProductClickListener {
         void onProductClick(Product product);
     }
+
 }
