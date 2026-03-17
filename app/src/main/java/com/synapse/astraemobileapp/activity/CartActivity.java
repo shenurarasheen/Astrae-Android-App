@@ -1,5 +1,6 @@
 package com.synapse.astraemobileapp.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import com.synapse.astraemobileapp.databinding.ActivityCartBinding;
 import com.synapse.astraemobileapp.model.CartItem;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.repository.CartRepository;
+import com.synapse.astraemobileapp.repository.ProfileRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ public class CartActivity extends AppCompatActivity {
     private CartAdapter cartAdapter;
 
     private CartRepository cartRepo;
+    private ProfileRepository profileRepo;
 
     private Map<String, Product> priceCache = new HashMap<>();
     private List<CartItem> cartItems = new ArrayList<>();
@@ -52,9 +55,17 @@ public class CartActivity extends AppCompatActivity {
                 setCartRecyclerView(cartItems);
 
                 binding.cartCheckoutBtn.setOnClickListener(v -> {
-                    Intent intent = new Intent(CartActivity.this, PaymentDetailsActivity.class);
-                    startActivity(intent);
-                    finish();
+
+                    profileRepo.isPermanentAddressFilled(isFilled -> {
+                        if (isFilled) {
+                            Intent intent = new Intent(CartActivity.this, PaymentDetailsActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            showAlertDialog();
+                        }
+                    });
+
                 });
 
                 binding.itemCount.setText("Item (" + cartItems.size() + ")");
@@ -100,6 +111,20 @@ public class CartActivity extends AppCompatActivity {
 
         binding.cartTotalPrice.setText(String.format(Locale.US, "LKR %,.2f", total));
         binding.cartSavedPrice.setText(String.format(Locale.US, "LKR %,.2f", saved));
+    }
+
+
+    private void showAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Please fill your address details in profile before checkout")
+                .setPositiveButton("Update Profile", ((dialog, which) -> {
+                    Intent intent = new Intent(CartActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                }))
+                .setNegativeButton("Discard", (dialog, which) -> {
+                    dialog.dismiss();
+                });
     }
 
 }
