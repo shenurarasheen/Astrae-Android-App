@@ -10,10 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.adapter.CartAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityCartBinding;
-import com.synapse.astraemobileapp.model.Cart;
 import com.synapse.astraemobileapp.repository.CartRepository;
-
-import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
 
