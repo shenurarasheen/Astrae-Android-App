@@ -154,7 +154,6 @@ public class CartRepository {
     }
 
 
-
     public void deleteCartItem(String documentId) {
         if (auth.getCurrentUser() == null) {
             moveToSignIn();

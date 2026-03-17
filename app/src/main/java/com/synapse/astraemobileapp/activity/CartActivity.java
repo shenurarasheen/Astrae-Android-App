@@ -29,9 +29,6 @@ public class CartActivity extends AppCompatActivity {
 
     private CartRepository cartRepo;
 
-    private double subTotal;
-    private double savedPrice;
-
     private Map<String, Product> priceCache = new HashMap<>();
     private List<CartItem> cartItems = new ArrayList<>();
 
@@ -52,29 +49,15 @@ public class CartActivity extends AppCompatActivity {
             cartRepo.cacheCartProducts(cartItems, productMap -> {
                 this.priceCache = productMap;
 
-                cartRecyclerView = findViewById(R.id.cartRecyclerView);
-                cartAdapter = new CartAdapter(cartItems, this, position -> {
-                    cartItems.remove(position);
-                    cartAdapter.notifyItemRemoved(position);
-                    cartAdapter.notifyItemRangeRemoved(position, cartItems.size());
-                });
-
-                cartAdapter.setOnQuantityChangedListener(() -> {
-                    updateTotalUI();
-                });
-
-                cartAdapter.setOnItemRemoveListener(() -> {
-                    updateTotalUI();
-                });
-
-                cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-                cartRecyclerView.setAdapter(cartAdapter);
+                setCartRecyclerView(cartItems);
 
                 binding.cartCheckoutBtn.setOnClickListener(v -> {
                     Intent intent = new Intent(CartActivity.this, PaymentDetailsActivity.class);
                     startActivity(intent);
                     finish();
                 });
+
+                binding.itemCount.setText("Item (" + cartItems.size() + ")");
 
                 updateTotalUI();
             });
@@ -83,11 +66,24 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void setCartRecyclerView(List<CartItem> cartItems) {
+        cartRecyclerView = findViewById(R.id.cartRecyclerView);
+        cartAdapter = new CartAdapter(cartItems, this, position -> {
+            cartItems.remove(position);
+            cartAdapter.notifyItemRemoved(position);
+            cartAdapter.notifyItemRangeRemoved(position, cartItems.size());
+        });
 
+        cartAdapter.setOnQuantityChangedListener(() -> {
+            updateTotalUI();
+        });
 
+        cartAdapter.setOnItemRemoveListener(() -> {
+            updateTotalUI();
+        });
+
+        cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        cartRecyclerView.setAdapter(cartAdapter);
     }
 
     private void updateTotalUI() {
