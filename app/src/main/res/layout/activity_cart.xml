@@ -48,10 +48,11 @@
         android:paddingHorizontal="10dp">
 
         <TextView
+            android:id="@+id/item_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Items (10)"
+            android:text="Items (0)"
             android:textSize="12sp"
             android:gravity="end"
             android:textColor="@color/btn_blue"
@@ -70,12 +71,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         android:layout_gravity="bottom"
         android:background="@drawable/cart_price_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="190dp"
@@ -84,12 +85,12 @@
             android:paddingHorizontal="10dp">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/cart_total_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="$ 4123.98"
-                android:textSize="28sp"
+                android:text="LKR 0.00"
+                android:textSize="21sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,19 +103,19 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Shipping : LKR 0.00"
                 android:textColor="@color/md_theme_secondary"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/cart_total_price" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/cart_saved_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="$ 135.60"
+                android:text="LKR 0.00"
                 android:textColor="@color/green_500"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -127,7 +128,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="You saved : "
                 android:textColor="@color/green_500"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
         </androidx.constraintlayout.widget.ConstraintLayout>
