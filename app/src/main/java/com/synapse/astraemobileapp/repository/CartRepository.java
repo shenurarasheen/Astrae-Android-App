@@ -13,7 +13,10 @@ import com.synapse.astraemobileapp.fragment.ListingFragment;
 import com.synapse.astraemobileapp.model.CartItem;
 import com.synapse.astraemobileapp.model.Product;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CartRepository {
 
@@ -126,6 +129,32 @@ public class CartRepository {
                 .addOnFailureListener(e -> Log.e("CartRepository", "Failed to retrieve product from cart item " +e));
     }
 
+
+
+    public void cacheCartProducts(List<CartItem> cartItems, ProductCallback callback) {
+        List<String> productIds = new ArrayList<>();
+        for (CartItem item: cartItems) productIds.add(item.getProductId());
+
+        if (productIds.isEmpty()) {
+            callback.onLoaded(new HashMap<>());
+            return;
+        }
+
+        db.collection("products")
+                .whereIn("productId", productIds)
+                .get()
+                .addOnSuccessListener(qds -> {
+                    Map<String, Product> productMap = new HashMap<>();
+                    for (DocumentSnapshot ds : qds.getDocuments()) {
+                        Product p = ds.toObject(Product.class);
+                        if (p != null) productMap.put(p.getProductId(), p);
+                    }
+                    callback.onLoaded(productMap);
+                });
+    }
+
+
+
     public void deleteCartItem(String documentId) {
         if (auth.getCurrentUser() == null) {
             moveToSignIn();
@@ -167,6 +196,10 @@ public class CartRepository {
 
     public interface ItemCallback {
         void callback(Product product);
+    }
+
+    public interface ProductCallback {
+        void onLoaded(Map<String, Product> productMap);
     }
 
 }

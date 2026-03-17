@@ -134,7 +134,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private double calculateEstimatePrice(double realPrice) {
-        return (realPrice * 10 /100) + realPrice;
+        return (realPrice * 5 /100) + realPrice;
     }
 
     private void incrementQty(int productQty) {

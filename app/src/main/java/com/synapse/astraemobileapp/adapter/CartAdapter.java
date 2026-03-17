@@ -20,8 +20,10 @@ import com.synapse.astraemobileapp.model.CartItem;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.repository.CartRepository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
@@ -33,6 +35,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private Context context;
 
     private ItemRemoveCallback callback;
+
+    private OnQuantityChangedListener quantityListener;
+    private OnItemRemoveListener removeListener;
+
+    public void setOnQuantityChangedListener(OnQuantityChangedListener listener) {
+        this.quantityListener = listener;
+    }
+
+    public void setOnItemRemoveListener(OnItemRemoveListener listener) {
+        this.removeListener = listener;
+    }
 
     public CartAdapter(List<CartItem> cartItems, Context context, ItemRemoveCallback callback) {
         this.cartItems = cartItems;
@@ -72,6 +85,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             holder.deleteBtn.setOnClickListener(v -> {
                 cartRepo.deleteCartItem(item.getDocumentId());
                 callback.callback(position);
+                if (removeListener != null) {
+                    removeListener.onRemoved();
+                }
             });
         });
     }
@@ -80,6 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public int getItemCount() {
         return cartItems.size();
     }
+
 
     private void incrementQty(Product product, CartItem item, CartViewHolder holder) {
         if (product.getStockCount() > item.getQuantity()) {
@@ -91,6 +108,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             holder.minusBtn.setEnabled(true);
 
             cartRepo.addToCart(product, 1);
+            if (quantityListener != null) {
+                quantityListener.onChanged();
+            }
         } else {
             holder.plusBtn.setEnabled(false);
             Toast.makeText(context, "Maximum quantity exceeded!", Toast.LENGTH_SHORT).show();
@@ -107,6 +127,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             holder.minusBtn.setEnabled(true);
 
             cartRepo.addToCart(product, -1);
+            if (removeListener != null) {
+                quantityListener.onChanged();
+            }
         } else {
             holder.minusBtn.setEnabled(false);
             Toast.makeText(context, "Quantity can't be less than 1", Toast.LENGTH_SHORT).show();
@@ -160,5 +183,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public interface ItemRemoveCallback{
         void callback(int position);
+    }
+
+    public interface OnQuantityChangedListener {
+        void onChanged();
+    }
+
+    public interface OnItemRemoveListener {
+        void onRemoved();
     }
 }
