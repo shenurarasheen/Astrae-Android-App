@@ -131,12 +131,19 @@ public class CartRepository {
             moveToSignIn();
             return;
         }
+
+        if (documentId == null) {
+            Log.e("CartRepository", "document id is null");
+            return;
+        }
+
         String uId = auth.getCurrentUser().getUid();
         db.collection("users").document(uId).collection("cart")
                 .document(documentId)
                 .delete()
                 .addOnCompleteListener(task-> {
                     if (task.isSuccessful()) {
+                        Toast.makeText(context, "Cart item deleted successfully!", Toast.LENGTH_SHORT).show();
                         Log.i("CartRepository", "Cart item deleted successfully");
                     } else {
                         Log.e("CartRepository", "Failed to delete cart item");

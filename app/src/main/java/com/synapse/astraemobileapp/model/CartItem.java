@@ -16,8 +16,6 @@ import lombok.Setter;
 @Builder
 public class CartItem {
     @DocumentId
-    @Getter(onMethod_ = {@Exclude})
-    @Setter(onMethod_ = {@Exclude})
     private String documentId;
     private String productId;
     private int quantity;
