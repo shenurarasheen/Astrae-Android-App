@@ -30,7 +30,6 @@ public class DialogUtils {
         if (window != null) {
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             window.setGravity(Gravity.CENTER_HORIZONTAL);
-            //window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
             WindowManager.LayoutParams params = window.getAttributes();
 

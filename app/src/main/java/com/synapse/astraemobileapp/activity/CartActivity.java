@@ -42,7 +42,7 @@ public class CartActivity extends AppCompatActivity {
 
         binding = ActivityCartBinding.inflate(getLayoutInflater());
         cartRepo = new CartRepository(this);
-        profileRepo = new ProfileRepository();
+        profileRepo = new ProfileRepository(this);
 
         setContentView(binding.getRoot());
 
