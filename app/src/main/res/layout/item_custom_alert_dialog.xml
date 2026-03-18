@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/shape_alert_dialog"
+    android:padding="18dp">
+
+    <TextView
+        android:id="@+id/custom_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dialog Title"
+        android:letterSpacing="0.03"
+        android:textSize="18sp"
+        android:fontFamily="@font/montserrat_semibold"/>
+
+    <TextView
+        android:id="@+id/custom_dialog_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dialog description"
+        android:textSize="14sp"
+        android:textColor="@color/md_theme_outline"
+        android:fontFamily="@font/montserrat_medium"
+        android:layout_marginTop="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/custom_dialog_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Discard"
+            android:textSize="13sp"
+            android:textColor="@color/btn_blue"
+            android:fontFamily="@font/montserrat_semibold"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_marginEnd="6dp"/>
+
+        <Button
+            android:id="@+id/custom_dialog_confirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Update"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_semibold"
+            android:backgroundTint="@color/btn_blue"/>
+
+    </LinearLayout>
+
+</LinearLayout>

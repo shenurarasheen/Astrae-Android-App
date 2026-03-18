@@ -15,6 +15,7 @@ import com.synapse.astraemobileapp.model.CartItem;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.repository.CartRepository;
 import com.synapse.astraemobileapp.repository.ProfileRepository;
+import com.synapse.astraemobileapp.util.DialogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ public class CartActivity extends AppCompatActivity {
 
         binding = ActivityCartBinding.inflate(getLayoutInflater());
         cartRepo = new CartRepository(this);
+        profileRepo = new ProfileRepository(this);
 
         setContentView(binding.getRoot());
 
@@ -62,7 +64,22 @@ public class CartActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            showAlertDialog();
+                            //showAlertDialog();
+                            DialogUtils.showCustomDialog(this,
+                                    "Confirmation",
+                                    "Please fill your address details in profile before checkout",
+                                    "Update",
+                                    "Discard",
+                                    new DialogUtils.CustomDialogClickCallback() {
+                                        @Override
+                                        public void onConfirm() {
+                                            Intent intent = new Intent(CartActivity.this, ProfileActivity.class);
+                                            startActivity(intent);
+                                        }
+                                        @Override
+                                        public void onCancel() {
+                                        }
+                                    });
                         }
                     });
 
@@ -113,18 +130,5 @@ public class CartActivity extends AppCompatActivity {
         binding.cartSavedPrice.setText(String.format(Locale.US, "LKR %,.2f", saved));
     }
 
-
-    private void showAlertDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Confirmation")
-                .setMessage("Please fill your address details in profile before checkout")
-                .setPositiveButton("Update Profile", ((dialog, which) -> {
-                    Intent intent = new Intent(CartActivity.this, ProfileActivity.class);
-                    startActivity(intent);
-                }))
-                .setNegativeButton("Discard", (dialog, which) -> {
-                    dialog.dismiss();
-                });
-    }
 
 }

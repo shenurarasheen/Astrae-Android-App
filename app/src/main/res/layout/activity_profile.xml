@@ -260,7 +260,7 @@
                             android:textSize="13sp" />
 
                         <EditText
-                            android:id="@+id/editTextText"
+                            android:id="@+id/profile_first_name"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
@@ -270,7 +270,6 @@
                             android:hint="ex :- John"
                             android:inputType="text"
                             android:paddingHorizontal="10dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
 
@@ -292,7 +291,7 @@
                             android:textSize="13sp" />
 
                         <EditText
-                            android:id="@+id/editTextText2"
+                            android:id="@+id/profile_last_name"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
@@ -302,7 +301,6 @@
                             android:hint="ex :- Doe"
                             android:inputType="text"
                             android:paddingHorizontal="10dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -318,6 +316,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:id="@+id/profile_email_address"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -328,7 +327,6 @@
                     android:hint="ex :- shenura@gmail.com"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="10dp"
-                    android:textColor="@color/gray_600"
                     android:textColorHint="@color/gray_500"
                     android:textSize="13sp" />
 
@@ -341,6 +339,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:id="@+id/profile_mobile_number"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -351,7 +350,6 @@
                     android:hint="ex :- +123 xxx xxx xxx"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="10dp"
-                    android:textColor="@color/gray_600"
                     android:textColorHint="@color/gray_500"
                     android:textSize="13sp" />
 
@@ -364,6 +362,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:id="@+id/profile_address_line1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -374,7 +373,6 @@
                     android:hint="ex :- 22/B, Main Street"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="10dp"
-                    android:textColor="@color/gray_600"
                     android:textColorHint="@color/gray_500"
                     android:textSize="13sp" />
 
@@ -387,6 +385,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:id="@+id/profile_address_line2"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -397,7 +396,6 @@
                     android:hint="ex :- Colombo Road, Gintota"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="10dp"
-                    android:textColor="@color/gray_600"
                     android:textColorHint="@color/gray_500"
                     android:textSize="13sp" />
 
@@ -426,6 +424,7 @@
                             android:textSize="13sp" />
 
                         <EditText
+                            android:id="@+id/profile_city"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
@@ -435,7 +434,6 @@
                             android:hint="ex :- Galle"
                             android:inputType="text"
                             android:paddingHorizontal="10dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
 
@@ -456,6 +454,7 @@
                             android:textSize="13sp" />
 
                         <EditText
+                            android:id="@+id/profile_postal_code"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
@@ -465,7 +464,6 @@
                             android:hint="ex :- 80000"
                             android:inputType="text"
                             android:paddingHorizontal="10dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -492,6 +490,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/profile_save_changes_btn"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_marginEnd="4dp"
@@ -503,10 +502,10 @@
                         android:textSize="14sp" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/profile_discard_btn"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_marginStart="4dp"
-
                         android:layout_weight="1"
                         android:backgroundTint="@android:color/transparent"
                         android:fontFamily="@font/montserrat_semibold"
