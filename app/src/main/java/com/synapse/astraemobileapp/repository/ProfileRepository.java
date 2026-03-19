@@ -1,30 +1,43 @@
 package com.synapse.astraemobileapp.repository;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.synapse.astraemobileapp.model.Address;
 import com.synapse.astraemobileapp.model.User;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ProfileRepository {
 
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private FirebaseStorage storage;
 
     private Context context;
+
+    private ImageView sideNavHeaderImage;
 
     public ProfileRepository(Context context) {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
         this.context = context;
+    }
+
+    public void setSideNavImageView(ImageView imageView) {
+        this.sideNavHeaderImage = imageView;
     }
 
     public void isPermanentAddressFilled(ProfileStatusCallback profileCallback) {
@@ -149,6 +162,62 @@ public class ProfileRepository {
     }
 
 
+    public void getAllUserAddresses(String uId, AllUserAddressesCallback callback) {
+        db.collection("users")
+                .document(uId)
+                .collection("addresses")
+                .get()
+                .addOnSuccessListener(ds -> {
+                    List<Address> addresses = ds.toObjects(Address.class);
+                    callback.callback(addresses);
+                })
+                .addOnFailureListener(e -> Log.e("ProfileRepository", "Failed to retrieve user addresses"));
+    }
+
+
+    public void storeProfileImage(Uri uri, User user) {
+
+        if (user == null) {
+            Log.e("ProfileRepository", "current user is null");
+            return;
+        }
+
+        String imageId = UUID.randomUUID().toString();
+
+        StorageReference imageReference = storage.getReference("profile-images").child(imageId);
+        imageReference.putFile(uri)
+                .addOnSuccessListener(taskSnapshot -> {
+
+                    db.collection("users").document(user.getUId())
+                            .update("profilePicUrl", imageId)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(context, "Profile image changed", Toast.LENGTH_SHORT).show();
+
+                                if (sideNavHeaderImage == null) return;
+                                loadProfileImage(user, sideNavHeaderImage);
+                            });
+
+                });
+
+    }
+
+
+    public void loadProfileImage(User user, ImageView imageView) {
+
+        if (user.getProfilePicUrl() == null || user.getProfilePicUrl().isEmpty()) {
+            return;
+        }
+
+        storage.getReference("profile-images/" + user.getProfilePicUrl()).getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Glide.with(context)
+                            .load(uri)
+                            .circleCrop()
+                            .into(imageView);
+                });
+    }
+
+
     public interface ProfileStatusCallback {
         void callback(boolean isFilled);
     }
@@ -167,6 +236,10 @@ public class ProfileRepository {
 
     public interface AddressAvailabilityCallback {
         void callback(boolean isAvailable);
+    }
+
+    public interface AllUserAddressesCallback {
+        void callback(List<Address> addresses);
     }
 
 }

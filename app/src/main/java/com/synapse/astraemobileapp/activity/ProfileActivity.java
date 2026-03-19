@@ -1,17 +1,25 @@
 package com.synapse.astraemobileapp.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.databinding.ActivityProfileBinding;
 import com.synapse.astraemobileapp.model.Address;
@@ -21,6 +29,7 @@ import com.synapse.astraemobileapp.util.ValidationUtils;
 
 import java.sql.Array;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -53,9 +62,71 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //set firstname, lastname and email to fields
+        setProfileDetails();
+
+        binding.profileSaveChangesBtn.setOnClickListener(view -> {
+            updateProfileData();
+        });
+
+        binding.profileDiscardBtn.setOnClickListener(view -> {
+            setProfileDetails();
+        });
+
+
+        binding.profileProfileImage.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+
+            activityResultLauncher.launch(intent);
+        });
+
+
+        binding.profileAllAddressesBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, AddressActivity.class);
+            startActivity(intent);
+        });
+    }
+
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == ProfileActivity.RESULT_OK) {
+
+                    if (result.getData() == null) return;
+
+                    Uri uri = result.getData().getData();
+
+                    if (uri != null && uri.getPath() != null) {
+
+                        Log.i("ImageURI", uri.getPath());
+
+                        Glide.with(ProfileActivity.this)
+                                .load(uri)
+                                .centerCrop()
+                                .into(binding.profileProfileImage);
+
+                        profileRepo.storeProfileImage(uri, user);
+                    }
+
+                }
+            }
+    );
+
+
+    @SuppressLint("SetTextI18n")
+    private void setProfileDetails() {
+
+        if (auth.getCurrentUser() == null) return;
+
         String uId = auth.getCurrentUser().getUid();
         profileRepo.getUserInitialData(uId, user -> {
             this.user = user;
+
+            profileRepo.loadProfileImage(user, binding.profileProfileImage);
+
+            binding.profileUserName.setText(user.getFirstName() + " " + user.getLastName());
+
             binding.profileFirstName.setText(user.getFirstName());
             binding.profileLastName.setText(user.getLastName());
             binding.profileEmailAddress.setText(user.getEmail());
@@ -77,15 +148,8 @@ public class ProfileActivity extends AppCompatActivity {
             });
 
         });
-
-        binding.profileSaveChangesBtn.setOnClickListener(view -> {
-            updateProfileData();
-        });
-
-        binding.profileDiscardBtn.setOnClickListener(view -> {
-
-        });
     }
+
 
     private void updateActivity(Class<? extends AppCompatActivity> activityClass, boolean needToBack) {
         Intent intent = new Intent(ProfileActivity.this, activityClass);

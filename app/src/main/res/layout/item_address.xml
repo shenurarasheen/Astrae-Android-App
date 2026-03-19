@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="10dp">
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/shape_address_background">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,26 +18,29 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="6dp"
                 android:src="@drawable/ic_location" />
 
             <TextView
+                android:id="@+id/item_address_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Address 1"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <RadioButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:id="@+id/item_address_radio_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:checked="true" />
+                android:layout_marginTop="5dp"
+                android:checked="false" />
 
         </LinearLayout>
 
@@ -48,50 +53,68 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/item_address_line1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Arachchigoda, Welipitimodara,"
-                android:textColor="@color/md_theme_secondary" />
+                android:textColor="@color/md_theme_secondary"
+                android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/item_address_line2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Gintota,"
-                android:textColor="@color/md_theme_secondary" />
+                android:textColor="@color/md_theme_secondary"
+                android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/item_address_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Galle."
-                android:textColor="@color/md_theme_secondary" />
+                android:textColor="@color/md_theme_secondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/item_address_postal_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="80000"
+                android:textColor="@color/md_theme_secondary"
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/item_address_mobile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="80000"
-                    android:textColor="@color/md_theme_secondary" />
+                    android:text="Tel - 0785444287"
+                    android:textColor="@color/md_theme_secondary"
+                    android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/item_address_permanent_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Permenent"
-                    android:textSize="11sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat_semibold"
                     android:background="@drawable/shape_badge"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:padding="4dp"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible"/>
+                    android:text="Permanent"
+                    android:textColor="@color/white"
+                    android:textSize="9sp"
+                    android:visibility="visible" />
 
 
             </LinearLayout>
