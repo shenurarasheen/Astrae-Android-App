@@ -315,11 +315,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/payment_details_total_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="$ 512.12"
+            android:text="LKR 0.00"
             android:textAlignment="textEnd"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
@@ -345,7 +345,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="$ 20.25"
+            android:text="LKR 0.00"
             android:textAlignment="textEnd"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
@@ -373,7 +373,7 @@
             android:layout_marginTop="6dp"
             android:backgroundTint="@color/blue_600"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="Pay  $532.37"
+            android:text="Pay  LKR 0.00"
             android:textAllCaps="false"
             android:textSize="16sp"
             android:textColor="@color/white"
