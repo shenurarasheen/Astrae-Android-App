@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -22,7 +23,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.databinding.ActivityHomeBinding;
+import com.synapse.astraemobileapp.databinding.SideNavHeaderBinding;
 import com.synapse.astraemobileapp.fragment.CategoryFragment;
+import com.synapse.astraemobileapp.repository.ProfileRepository;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NavigationBarView.OnItemSelectedListener {
 
@@ -32,7 +35,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView sideNavigation;
     private BottomNavigationView bottomNavigationView;
 
+    private SideNavHeaderBinding sideNavHeaderBinding;
+
     private FirebaseAuth auth;
+
+    private ProfileRepository profileRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(binding.getRoot());
 
         auth = FirebaseAuth.getInstance();
+        profileRepo = new ProfileRepository(this);
 
         toolbar = binding.toolbar;
         drawerLayout = binding.drawerLayout;
@@ -56,6 +64,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+
+        View headerView = binding.sideNavigationView.getHeaderView(0);
+        sideNavHeaderBinding = SideNavHeaderBinding.bind(headerView);
+
+        profileRepo.setSideNavImageView(sideNavHeaderBinding.sideNavHeaderImage);
+
+        if (auth.getCurrentUser() != null) {
+
+            profileRepo.getUserInitialData(auth.getCurrentUser().getUid(), user -> {
+                profileRepo.loadProfileImage(user, sideNavHeaderBinding.sideNavHeaderImage);
+            });
+        }
+
+        headerView.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override

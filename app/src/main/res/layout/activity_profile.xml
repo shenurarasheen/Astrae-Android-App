@@ -89,6 +89,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/profile_profile_image"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:clipToOutline="true"
@@ -98,6 +99,7 @@
 
 
                     <TextView
+                        android:id="@+id/profile_user_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
@@ -209,6 +211,7 @@
                         android:visibility="gone" />
 
                     <ImageView
+                        android:id="@+id/profile_all_addresses_btn"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
