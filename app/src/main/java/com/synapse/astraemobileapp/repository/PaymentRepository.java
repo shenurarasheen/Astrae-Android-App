@@ -2,17 +2,24 @@ package com.synapse.astraemobileapp.repository;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 import com.synapse.astraemobileapp.model.CartItem;
+import com.synapse.astraemobileapp.model.Order;
 import com.synapse.astraemobileapp.model.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import lk.payhere.androidsdk.model.StatusResponse;
 
 public class PaymentRepository {
 
@@ -48,7 +55,7 @@ public class PaymentRepository {
         getCartItems(items -> {
             cartItems = items;
             List<String> productIds = new ArrayList<>();
-            for (CartItem item: items) {
+            for (CartItem item : items) {
                 productIds.add(item.getProductId());
             }
 
@@ -57,7 +64,7 @@ public class PaymentRepository {
                     .get()
                     .addOnSuccessListener(qds -> {
                         Map<String, Product> productCache = new HashMap<>();
-                        for (DocumentSnapshot ds: qds.getDocuments()) {
+                        for (DocumentSnapshot ds : qds.getDocuments()) {
                             Product p = ds.toObject(Product.class);
                             if (p == null) return;
                             productCache.put(p.getProductId(), p);
@@ -70,13 +77,92 @@ public class PaymentRepository {
     public void calculateTotal(CartItemTotalCallback callback) {
         total = 0;
         cacheProductMap(map -> {
-            for (CartItem item: cartItems) {
+            for (CartItem item : cartItems) {
                 Product p = map.get(item.getProductId());
                 if (p == null) return;
                 total += item.getQuantity() * p.getPrice();
             }
             callback.callback(total);
         });
+    }
+
+
+    // save order to firestore
+    public void placeOrder(StatusResponse statusResponse, double total, String addressId, OrderPlacementCallback callback) {
+        if (auth.getCurrentUser() == null) return;
+
+        //get order items
+        cacheProductMap(map -> {
+
+            List<Order.OrderItem> orderItems = new ArrayList<>();
+            for (CartItem item : cartItems) {
+                Product p = map.get(item.getProductId());
+                if (p == null) return;
+                orderItems.add(
+                        Order.OrderItem.builder()
+                                .productId(item.getProductId())
+                                .unitPrice(p.getPrice())
+                                .quantity(item.getQuantity())
+                                .build()
+                );
+            }
+
+            Order order = Order.builder()
+                    .userId(auth.getCurrentUser().getUid())
+                    .totalAmount(total)
+                    .status("PAID")
+                    .orderDate(Timestamp.now().toDate().getTime())
+                    .orderItems(orderItems)
+                    .addressId(addressId)
+                    .statusResponse(statusResponse)
+                    .build();
+
+            db.collection("orders")
+                    .add(order)
+                    .addOnSuccessListener(dr -> {
+
+                        // decrease stock quantity
+                        for (Order.OrderItem item : orderItems) {
+                            db.collection("products")
+                                    .whereEqualTo("productId", item.getProductId())
+                                    .get()
+                                    .addOnSuccessListener(qs -> {
+                                        DocumentSnapshot ds = qs.getDocuments().get(0);
+                                        Product p = ds.toObject(Product.class);
+                                        if (p == null) return;
+                                        int newStock = p.getStockCount() - item.getQuantity();
+                                        ds.getReference().update("stockCount", newStock);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("PaymentRepository", "Failed to update stock quantity " + e);
+                                        callback.onFailure("Failed to update product stock after placing order.");
+                                    });
+                        }
+
+                        //delete cart items
+                        for (CartItem item : cartItems) {
+                            db.collection("users").document(auth.getCurrentUser().getUid())
+                                    .collection("cart")
+                                    .whereEqualTo("productId", item.getProductId())
+                                    .get()
+                                    .addOnSuccessListener(qds2 -> {
+                                        for (DocumentSnapshot ds : qds2.getDocuments()) {
+                                            ds.getReference().delete();
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("PaymentRepository", "Failed to delete cart item " + e);
+                                        callback.onFailure("Failed to clear cart after placing order.");
+                                    });
+                        }
+
+                        callback.onSuccess();
+
+                    })
+                    .addOnFailureListener(e -> Log.e("PaymentRepository", "Failed to place order " + e));
+
+        });
+
     }
 
 
@@ -90,5 +176,10 @@ public class PaymentRepository {
 
     public interface CartItemTotalCallback {
         void callback(double total);
+    }
+
+    public interface OrderPlacementCallback {
+        void onSuccess();
+        void onFailure(String errorMessage);
     }
 }

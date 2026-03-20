@@ -44,6 +44,8 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     private double total;
     private boolean paymentActive;
 
+    private String addressId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +121,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 .build();
 
         profileRepo.saveAddressDetails(address, false, addressId -> {
+            this.addressId = addressId;
             Log.i("PaymentDetailsActivity", "Address saved with ID: " + addressId);
         });
 
@@ -134,10 +137,10 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         req.setSandBox(true);
 
         req.setMerchantId("1225083");
-        req.setMerchantSecret("MzA2NDQzNjIwNDE0NjcxOTM5OTU0MTcyMDg3MzQwMzYwMjEwODQzNQ==");
+        req.setMerchantSecret("MTkwOTQwNzg4ODUzNTQ4ODE1OTI1NzYwODM1NjAxOTg2NTk2ODAx");
         req.setCurrency("LKR");
         req.setAmount(total);
-        req.setOrderId("ESOI-002");
+        req.setOrderId("ASOI-001");
         req.setItemsDescription("Order Description");
 
         req.getCustomer().setFirstName(binding.paymentDetailsFirstName.getText().toString());
@@ -148,7 +151,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         req.getCustomer().getAddress().setCity(binding.paymentDetailsCity.getText().toString());
         req.getCustomer().getAddress().setCountry("Sri Lanka");
 
-        req.setNotifyUrl("https://synapse.requestcatcher.com/"); //request to this url to notify if it success or not
+        req.setNotifyUrl("https://astrae.requestcatcher.com/"); //request to this url to notify if it success or not
 
         Intent intent = new Intent(this, PHMainActivity.class);
         intent.putExtra(PHConstants.INTENT_EXTRA_DATA, req);
@@ -206,6 +209,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
         profileRepo.getAllUserAddresses(user.getUId(), addresses -> {
             BottomDialogAddressAdapter adapter = new BottomDialogAddressAdapter(addresses, user.getPermanentAddressId(), address -> {
+                this.addressId = address.getAddressId();
                 binding.paymentDetailsFirstName.setText(address.getFirstName());
                 binding.paymentDetailsLastName.setText(address.getLastName());
                 binding.paymentDetailsAddressLine1.setText(address.getAddressLine1());
@@ -237,6 +241,23 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             StatusResponse statusResponse = response.getData();
 
                             // save order details to firestore here
+                            paymentRepo.placeOrder(statusResponse, total, addressId, new PaymentRepository.OrderPlacementCallback() {
+                                @Override
+                                public void onSuccess() {
+                                    Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                    Log.i("PAYHERE", "Payment Successful! Transaction ID: " + statusResponse.getPaymentNo());
+
+                                    Intent intent = new Intent(PaymentDetailsActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    Toast.makeText(getApplicationContext(), "Failed to place order: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
 
                         } else {
                             Log.e("PAYHERE", response.getData().getMessage());
