@@ -64,4 +64,8 @@ dependencies {
 
     //google flexbox layout dependency
     implementation libs.flexbox
+
+    //payhere dependencies
+    implementation libs.payhere.android.sdk
+    implementation libs.gson
 }
