@@ -83,7 +83,7 @@ public class ProfileRepository {
     }
 
 
-    public void saveAddressDetails(Address address, UpdateProfileCallback callback) {
+    public void saveAddressDetails(Address address, boolean isPermanentAddress, UpdateProfileCallback callback) {
 
         if (auth.getCurrentUser() == null) return;
 
@@ -107,7 +107,9 @@ public class ProfileRepository {
                             Toast.makeText(context, "Failed to save details", Toast.LENGTH_SHORT).show();
                         });
             } else {
-                Toast.makeText(context, "This address already exist", Toast.LENGTH_SHORT).show();
+                if (isPermanentAddress) {
+                    Toast.makeText(context, "This address already exist", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
@@ -139,7 +141,7 @@ public class ProfileRepository {
     }
 
 
-    public void checkAddressAvailability(String uId, Address permanentAddress, AddressAvailabilityCallback callback) {
+    public void checkAddressAvailability(String uId, Address address, AddressAvailabilityCallback callback) {
         db.collection("users")
                 .document(uId)
                 .collection("addresses")
@@ -148,10 +150,10 @@ public class ProfileRepository {
                     List<Address> addresses = qds.toObjects(Address.class);
                     if (!addresses.isEmpty()) {
                         boolean alreadyExists = addresses.stream().anyMatch(existing ->
-                                        existing.getFirstName().equalsIgnoreCase(permanentAddress.getFirstName()) &&
-                                                existing.getLastName().equalsIgnoreCase(permanentAddress.getLastName()) &&
-                                                existing.getAddressLine1().equalsIgnoreCase(permanentAddress.getAddressLine1()) &&
-                                                existing.getMobile().equals(permanentAddress.getMobile())
+                                        existing.getFirstName().equalsIgnoreCase(address.getFirstName()) &&
+                                                existing.getLastName().equalsIgnoreCase(address.getLastName()) &&
+                                                existing.getAddressLine1().equalsIgnoreCase(address.getAddressLine1()) &&
+                                                existing.getMobile().equals(address.getMobile())
                         );
                         callback.callback(alreadyExists);
                         return;

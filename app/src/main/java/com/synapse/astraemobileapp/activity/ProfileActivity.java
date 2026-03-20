@@ -186,7 +186,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .postalCode(postalCode)
                 .build();
 
-        profileRepo.saveAddressDetails(permanentAddress, addressId -> {
+        profileRepo.saveAddressDetails(permanentAddress, true, addressId -> {
 
             profileRepo.updatePermanentAddressId(addressId, user);
 
