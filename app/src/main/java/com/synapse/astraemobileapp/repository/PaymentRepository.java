@@ -30,21 +30,21 @@ public class PaymentRepository {
         this.context = context;
     }
 
-    public void getCartItems(CartProductCallback callback) {
+    private void getCartItems(CartProductCallback callback) {
 
         if (auth.getCurrentUser() == null) return;
 
         db.collection("users").document(auth.getCurrentUser().getUid())
                 .collection("cart")
                 .get()
-                .addOnSuccessListener(qds1 -> {
-                    List<CartItem> items = qds1.toObjects(CartItem.class);
+                .addOnSuccessListener(qds -> {
+                    List<CartItem> items = qds.toObjects(CartItem.class);
                     callback.callback(items);
                 })
                 .addOnFailureListener(e -> Log.e("PaymentRepository", "Failed to get cart total"));
     }
 
-    public void cacheProductMap(CacheProductCallback callback) {
+    private void cacheProductMap(CacheProductCallback callback) {
         getCartItems(items -> {
             cartItems = items;
             List<String> productIds = new ArrayList<>();

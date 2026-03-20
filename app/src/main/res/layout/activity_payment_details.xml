@@ -50,7 +50,7 @@
             android:layout_marginTop="15dp">
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/payment_details_checkbox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
@@ -68,7 +68,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBox2">
+                app:layout_constraintTop_toBottomOf="@+id/payment_details_checkbox">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,22 +82,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="First Name" />
+                        android:text="First Name"
+                        android:textSize="13sp"/>
 
                     <EditText
-                        android:id="@+id/editTextText"
+                        android:id="@+id/payment_details_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/input_background"
                         android:ems="10"
-                        android:fontFamily="@font/montserrat"
+                        android:fontFamily="@font/montserrat_medium"
                         android:hint="ex :- John"
                         android:inputType="text"
                         android:paddingHorizontal="10dp"
-                        android:textColor="@color/gray_600"
                         android:textColorHint="@color/gray_500"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -113,22 +113,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Last Name" />
+                        android:text="Last Name"
+                        android:textSize="13sp"/>
 
                     <EditText
-                        android:id="@+id/editTextText2"
+                        android:id="@+id/payment_details_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/input_background"
                         android:ems="10"
-                        android:fontFamily="@font/montserrat"
+                        android:fontFamily="@font/montserrat_medium"
                         android:hint="ex :- Doe"
                         android:inputType="text"
                         android:paddingHorizontal="10dp"
-                        android:textColor="@color/gray_600"
                         android:textColorHint="@color/gray_500"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -139,23 +139,23 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Address Line 1"
+                android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
             <EditText
-                android:id="@+id/editTextText3"
+                android:id="@+id/payment_details_address_line1"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/input_background"
                 android:ems="10"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/montserrat_medium"
                 android:hint="22/B, Backers Street"
                 android:inputType="text"
                 android:paddingHorizontal="10dp"
-                android:textColor="@color/gray_600"
                 android:textColorHint="@color/gray_500"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 app:layout_constraintTop_toBottomOf="@id/textView17" />
 
             <TextView
@@ -165,23 +165,23 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Address Line 2"
+                android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+                app:layout_constraintTop_toBottomOf="@+id/payment_details_address_line1" />
 
             <EditText
-                android:id="@+id/editTextText4"
+                android:id="@+id/payment_details_address_line2"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/input_background"
                 android:ems="10"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/montserrat_medium"
                 android:hint="Newyork"
                 android:inputType="text"
                 android:paddingHorizontal="10dp"
-                android:textColor="@color/gray_600"
                 android:textColorHint="@color/gray_500"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView18" />
@@ -194,7 +194,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText4">
+                app:layout_constraintTop_toBottomOf="@+id/payment_details_address_line2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -208,22 +208,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="City" />
+                        android:text="City"
+                        android:textSize="13sp"/>
 
                     <EditText
-                        android:id="@+id/editTextText5"
+                        android:id="@+id/payment_details_city"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/input_background"
                         android:ems="10"
-                        android:fontFamily="@font/montserrat"
+                        android:fontFamily="@font/montserrat_medium"
                         android:hint="London"
                         android:inputType="text"
                         android:paddingHorizontal="10dp"
-                        android:textColor="@color/gray_600"
                         android:textColorHint="@color/gray_500"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -239,21 +239,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Postal Code" />
+                        android:text="Postal Code"
+                        android:textSize="13sp"/>
 
                     <EditText
-                        android:id="@+id/editTextTextPostalAddress"
+                        android:id="@+id/payment_details_postal_code"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/input_background"
                         android:ems="10"
-                        android:fontFamily="@font/montserrat"
+                        android:fontFamily="@font/montserrat_medium"
                         android:hint="10000"
                         android:inputType="textPostalAddress"
                         android:paddingHorizontal="10dp"
                         android:textColorHint="@color/gray_500"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -265,24 +266,24 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Mobile Number"
+                android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
             <EditText
-                android:id="@+id/editTextText8"
+                android:id="@+id/payment_details_mobile_number"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/input_background"
                 android:ems="10"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/montserrat_medium"
                 android:hint="+211 233 233 456"
                 android:inputType="number"
                 android:paddingHorizontal="10dp"
-                android:textColor="@color/gray_600"
                 android:textColorHint="@color/gray_500"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -310,7 +311,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat_semibold"
             android:text="Total Amount"
-            android:textSize="20sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -321,7 +322,7 @@
             android:fontFamily="@font/montserrat_semibold"
             android:text="LKR 0.00"
             android:textAlignment="textEnd"
-            android:textSize="22sp"
+            android:textSize="19sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -336,7 +337,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/montserrat_semibold"
             android:text="Shipping"
-            android:textSize="17sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -347,7 +348,7 @@
             android:fontFamily="@font/montserrat_semibold"
             android:text="LKR 0.00"
             android:textAlignment="textEnd"
-            android:textSize="17sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView13"
@@ -361,13 +362,13 @@
             android:layout_marginBottom="10dp"
             android:background="?android:attr/listDivider"
             android:backgroundTint="@color/gray_500"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintBottom_toTopOf="@+id/payment_details_pay_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/payment_details_pay_btn"
             android:layout_width="0dp"
             android:layout_height="65dp"
             android:layout_marginTop="6dp"
@@ -375,7 +376,7 @@
             android:fontFamily="@font/montserrat_semibold"
             android:text="Pay  LKR 0.00"
             android:textAllCaps="false"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="@color/white"
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
