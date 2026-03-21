@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="3dp"
+    android:layout_marginVertical="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/item_order_container_delivery_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Est Delivery on 25, Dec 2024"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat_semibold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/item_order_container_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/gray_500" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ship to:"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat_semibold"/>
+
+            <TextView
+                android:id="@+id/item_order_container_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Arachchigoda, Welipitimodera, Gintota, Galle"
+                android:textSize="11sp"
+                android:textColor="@color/md_theme_outline"
+                android:fontFamily="@font/montserrat_medium"/>
+
+            <TextView
+                android:id="@+id/item_order_container_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shipping"
+                android:textSize="10sp"
+                android:textAlignment="center"
+                android:fontFamily="@font/montserrat_semibold"
+                android:textColor="@color/sky_500"
+                android:background="@drawable/shape_view_certificate_btn"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="3dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
