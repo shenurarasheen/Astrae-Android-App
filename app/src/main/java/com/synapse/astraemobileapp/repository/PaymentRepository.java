@@ -8,6 +8,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 import com.synapse.astraemobileapp.model.CartItem;
@@ -15,6 +16,7 @@ import com.synapse.astraemobileapp.model.Order;
 import com.synapse.astraemobileapp.model.Product;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,8 +132,8 @@ public class PaymentRepository {
                                         DocumentSnapshot ds = qs.getDocuments().get(0);
                                         Product p = ds.toObject(Product.class);
                                         if (p == null) return;
-                                        int newStock = p.getStockCount() - item.getQuantity();
-                                        ds.getReference().update("stockCount", newStock);
+                                        //int newStock = p.getStockCount() - item.getQuantity();
+                                        ds.getReference().update("stockCount", FieldValue.increment(-item.getQuantity()), "soldCount", FieldValue.increment(item.getQuantity()));
                                     })
                                     .addOnFailureListener(e -> {
                                         Log.e("PaymentRepository", "Failed to update stock quantity " + e);
@@ -165,6 +167,55 @@ public class PaymentRepository {
 
     }
 
+    // overload placeOrder for single product purchase
+    public void placeOrder(StatusResponse statusResponse, double total, String addressId, String productId, int quantity, OrderPlacementCallback callback) {
+        if (auth.getCurrentUser() == null) return;
+
+        Order.OrderItem orderItem = Order.OrderItem.builder()
+                .productId(productId)
+                .unitPrice(total / quantity)
+                .quantity(quantity)
+                .build();
+
+        Order order = Order.builder()
+                .userId(auth.getCurrentUser().getUid())
+                .totalAmount(total)
+                .status("PAID")
+                .orderDate(Timestamp.now().toDate().getTime())
+                .orderItems(Arrays.asList(orderItem))
+                .addressId(addressId)
+                .statusResponse(statusResponse)
+                .build();
+
+        db.collection("orders")
+                .add(order)
+                .addOnSuccessListener(dr -> {
+
+                    db.collection("products")
+                            .whereEqualTo("productId", productId)
+                            .get()
+                            .addOnSuccessListener(qs -> {
+                                DocumentSnapshot ds = qs.getDocuments().get(0);
+                                Product p = ds.toObject(Product.class);
+
+                                if (p == null) return;
+                                ds.getReference().update("stockCount", FieldValue.increment(-quantity), "soldCount", FieldValue.increment(quantity));
+
+                                callback.onSuccess();
+
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("PaymentRepository", "Failed to update stock quantity " + e);
+                                callback.onFailure("Failed to update product stock after placing order.");
+                            });
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("PaymentRepository", "Failed to place order " + e);
+                    callback.onFailure("Failed to place order. Please try again.");
+                });
+    }
+
 
     public interface CartProductCallback {
         void callback(List<CartItem> items);
@@ -180,6 +231,7 @@ public class PaymentRepository {
 
     public interface OrderPlacementCallback {
         void onSuccess();
+
         void onFailure(String errorMessage);
     }
 }

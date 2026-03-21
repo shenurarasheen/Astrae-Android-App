@@ -80,7 +80,7 @@ public class ListingFragment extends Fragment {
                     if (!ds.isEmpty()) {
                         List<Product> products = ds.toObjects(Product.class);
 
-                        ListingAdapter listingAdapter = new ListingAdapter(products, product -> {
+                        ListingAdapter listingAdapter = new ListingAdapter(products, getContext(), product -> {
                             Intent intent = new Intent(getContext(), ProductDetailsActivity.class);
                             intent.putExtra("productId", product.getProductId());
                             startActivity(intent);

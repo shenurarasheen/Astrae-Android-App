@@ -43,8 +43,13 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
     private double total;
     private boolean paymentActive;
+    private boolean isCartBuying;
 
     private String addressId;
+
+    //for single product buying
+    private String productId;
+    private int quantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +70,15 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         paymentRepo = new PaymentRepository(this);
         profileRepo = new ProfileRepository(this);
 
-        paymentRepo.calculateTotal(total -> {
-            this.total = total;
+
+        Intent intent = getIntent();
+        if (intent.getExtras() != null && !intent.getExtras().isEmpty()) {
+            double price = intent.getDoubleExtra("price", 0.0);
+            productId = intent.getStringExtra("productId");
+            quantity = intent.getIntExtra("quantity", 1);
+
+            total = price * quantity;
+
             binding.paymentDetailsTotalAmount.setText(String.format(
                     Locale.US,
                     "LKR %,.2f",
@@ -78,7 +90,25 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                     total
             ));
             paymentActive = true;
-        });
+            isCartBuying = false;
+        } else {
+            paymentRepo.calculateTotal(total -> {
+                this.total = total;
+                binding.paymentDetailsTotalAmount.setText(String.format(
+                        Locale.US,
+                        "LKR %,.2f",
+                        total
+                ));
+                binding.paymentDetailsPayBtn.setText(String.format(
+                        Locale.US,
+                        "Pay LKR %,.2f",
+                        total
+                ));
+                paymentActive = true;
+                isCartBuying = true;
+            });
+        }
+
 
         binding.paymentDetailsCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -240,24 +270,49 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                         if (response != null && response.isSuccess()) {
                             StatusResponse statusResponse = response.getData();
 
-                            // save order details to firestore here
-                            paymentRepo.placeOrder(statusResponse, total, addressId, new PaymentRepository.OrderPlacementCallback() {
-                                @Override
-                                public void onSuccess() {
-                                    Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                    Log.i("PAYHERE", "Payment Successful! Transaction ID: " + statusResponse.getPaymentNo());
+                            if (isCartBuying) {
+                                // save order details to firestore here
+                                paymentRepo.placeOrder(statusResponse, total, addressId, new PaymentRepository.OrderPlacementCallback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                        Log.i("PAYHERE", "Payment Successful! Transaction ID: " + statusResponse.getPaymentNo());
 
-                                    Intent intent = new Intent(PaymentDetailsActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                        Intent intent = new Intent(PaymentDetailsActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onFailure(String errorMessage) {
+                                        Toast.makeText(getApplicationContext(), "Failed to place order: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            } else {
+
+                                if (productId == null || quantity <= 0) {
+                                    Toast.makeText(getApplicationContext(), "Invalid product or quantity", Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
 
-                                @Override
-                                public void onFailure(String errorMessage) {
-                                    Toast.makeText(getApplicationContext(), "Failed to place order: " + errorMessage, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                paymentRepo.placeOrder(statusResponse, total, addressId, productId, quantity, new PaymentRepository.OrderPlacementCallback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                        Log.i("PAYHERE", "Payment Successful! Transaction ID: " + statusResponse.getPaymentNo());
 
+                                        Intent intent = new Intent(PaymentDetailsActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onFailure(String errorMessage) {
+                                        Toast.makeText(getApplicationContext(), "Failed to place order: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
 
                         } else {
                             Log.e("PAYHERE", response.getData().getMessage());
