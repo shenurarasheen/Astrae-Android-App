@@ -131,6 +131,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
             int qty =  Integer.parseInt(binding.singleProductQty.getText().toString());
             cartRepo.addToCart(product, qty);
         });
+
+        binding.singleProductBuyNowBtn.setOnClickListener(v -> {
+            int qty =  Integer.parseInt(binding.singleProductQty.getText().toString());
+            Intent intent = new Intent(ProductDetailsActivity.this, PaymentDetailsActivity.class);
+            intent.putExtra("productId", product.getProductId());
+            intent.putExtra("price", product.getPrice());
+            intent.putExtra("quantity", qty);
+            startActivity(intent);
+        });
     }
 
     private double calculateEstimatePrice(double realPrice) {

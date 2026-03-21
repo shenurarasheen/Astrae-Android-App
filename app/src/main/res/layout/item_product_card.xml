@@ -125,6 +125,7 @@
                     </LinearLayout>
 
                     <Button
+                        android:id="@+id/item_product_pay_btn"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"

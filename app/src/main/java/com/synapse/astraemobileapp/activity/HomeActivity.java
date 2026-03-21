@@ -142,6 +142,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (itemId == R.id.side_nav_orders) {
 
+            if (auth.getCurrentUser() == null) {
+                updateActivity(SignInActivity.class, true);
+            } else {
+                updateActivity(OrdersActivity.class, true);
+            }
+
+            sideNavMenu.findItem(R.id.side_nav_orders).setChecked(true);
+
         } else if (itemId == R.id.side_nav_settings) {
 
         } else if (itemId == R.id.side_nav_add_product) {

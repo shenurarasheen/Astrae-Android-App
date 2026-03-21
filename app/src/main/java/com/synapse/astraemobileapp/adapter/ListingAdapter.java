@@ -1,9 +1,11 @@
 package com.synapse.astraemobileapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
+import com.synapse.astraemobileapp.activity.PaymentDetailsActivity;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.repository.CartRepository;
 
@@ -34,10 +37,13 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
 
     private static final int SINGLE_PRODUCT_QUANTITY = 1;
 
-    public ListingAdapter(List<Product> products, OnProductClickListener productListener){
+    private Context context;
+
+    public ListingAdapter(List<Product> products, Context context, OnProductClickListener productListener){
         this.products = products;
         this.productListner = productListener;
         this.storage = FirebaseStorage.getInstance();
+        this.context = context;
     }
 
     @NonNull
@@ -66,6 +72,18 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
 
         holder.addToCart.setOnClickListener(view -> {
             cartRepo.addToCart(product, ListingAdapter.SINGLE_PRODUCT_QUANTITY);
+        });
+
+        holder.payBtn.setOnClickListener(view -> {
+            if (product.getStockCount() <= 0) {
+                Toast.makeText(view.getContext(), "Sorry, this product is out of stock.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent intent = new Intent(context, PaymentDetailsActivity.class);
+            intent.putExtra("productId", product.getProductId());
+            intent.putExtra("price", product.getPrice());
+            intent.putExtra("quantity", SINGLE_PRODUCT_QUANTITY);
+            context.startActivity(intent);
         });
     }
 
@@ -108,6 +126,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         ImageView productImage, addToCart;
         FlexboxLayout badgeContainer;
 
+        Button payBtn;
+
         public ListingViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -116,6 +136,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
             productPrice = itemView.findViewById(R.id.item_product_price);
             badgeContainer = itemView.findViewById(R.id.item_product_badge_container);
             addToCart = itemView.findViewById(R.id.item_product_add_to_cart);
+            payBtn = itemView.findViewById(R.id.item_product_pay_btn);
         }
     }
 
