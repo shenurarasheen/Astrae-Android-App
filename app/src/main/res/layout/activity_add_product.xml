@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Adding 3 product images is required*"
+                android:text="Adding 4 product images is required*"
                 android:textSize="10sp"
                 android:textColor="@color/md_theme_outlineVariant"
                 android:textAlignment="textEnd"
@@ -83,7 +83,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:clipChildren="false"
-                android:clipToPadding="false">
+                android:clipToPadding="false"
+                android:visibility="gone">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="40dp"
@@ -92,7 +93,8 @@
                     app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
                     android:scaleType="centerCrop"
                     android:elevation="4dp"
-                    android:outlineSpotShadowColor="@color/black" />
+                    android:outlineSpotShadowColor="@color/black"
+                    android:visibility="gone"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="40dp"
@@ -101,7 +103,8 @@
                     app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
                     android:layout_marginStart="-20dp"
                     android:elevation="6dp"
-                    android:outlineSpotShadowColor="@color/black" />
+                    android:outlineSpotShadowColor="@color/black"
+                    android:visibility="gone"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="40dp"
@@ -110,7 +113,18 @@
                     app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
                     android:layout_marginStart="-20dp"
                     android:elevation="8dp"
-                    android:outlineSpotShadowColor="@color/black" />
+                    android:outlineSpotShadowColor="@color/black"
+                    android:visibility="gone"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/necklace"
+                    app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
+                    android:layout_marginStart="-20dp"
+                    android:elevation="12dp"
+                    android:outlineSpotShadowColor="@color/black"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -128,6 +142,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:id="@+id/add_product_product_title"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -162,6 +177,7 @@
                     android:layout_marginBottom="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/add_product_product_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_background"
@@ -185,6 +201,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:id="@+id/add_product_price"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -224,6 +241,7 @@
                             android:textSize="13sp" />
 
                         <EditText
+                            android:id="@+id/add_product_category"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
@@ -254,6 +272,7 @@
                             android:textSize="13sp" />
 
                         <EditText
+                            android:id="@+id/add_product_size"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
@@ -278,6 +297,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:id="@+id/add_product_metal"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -313,6 +333,7 @@
                     android:background="@drawable/input_background">
 
                     <TextView
+                        android:id="@+id/add_product_upload_certificate"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -339,6 +360,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/add_product_add_btn"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_marginEnd="4dp"
