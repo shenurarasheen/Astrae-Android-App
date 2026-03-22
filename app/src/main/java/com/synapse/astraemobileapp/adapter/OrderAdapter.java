@@ -15,7 +15,10 @@ import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.model.Order;
 import com.synapse.astraemobileapp.repository.OrderRepository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 
@@ -58,6 +61,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 }
             });
         }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd, MMM yyyy", Locale.getDefault());
+        String estDateString = sdf.format(new Date(order.getDeliveryDate()));
+
+        if (order.getStatus().equalsIgnoreCase("DELIVERED")) {
+            holder.deliverDate.setText("Delivered on " + estDateString);
+        } else {
+            holder.deliverDate.setText("Est Delivery on " + estDateString);
+        }
+
+
 
         orderRepo.getAddressFromId(order.getAddressId(), address -> {
             holder.deliverAddress.setText(

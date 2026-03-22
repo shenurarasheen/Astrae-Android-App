@@ -74,8 +74,8 @@
                 android:textSize="10sp"
                 android:textAlignment="center"
                 android:fontFamily="@font/montserrat_semibold"
-                android:textColor="@color/sky_500"
-                android:background="@drawable/shape_view_certificate_btn"
+                android:textColor="@color/paid_badge_text_color"
+                android:background="@drawable/item_paid_badge_bg"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="3dp" />
 

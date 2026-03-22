@@ -21,6 +21,7 @@ public class Order {
     private double totalAmount;
     private String status;
     private long orderDate;
+    private long deliveryDate;
     private List<OrderItem> orderItems;
     private String addressId;
     private StatusResponse statusResponse;
