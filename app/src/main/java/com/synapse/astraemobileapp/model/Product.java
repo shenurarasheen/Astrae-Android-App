@@ -21,7 +21,7 @@ public class Product {
     private String sellerId;
     private List<String> productImages;
     private String certificateImage;
-    private boolean status;
+    private String status;
     private float rating;
     private int soldCount;
     private int viewedCount;
