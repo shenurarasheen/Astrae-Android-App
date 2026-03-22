@@ -46,12 +46,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         RecyclerView recyclerView = holder.itemView.findViewById(R.id.item_order_container_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        orderRepo.getOrderItems(orderItems -> {
-            orderRepo.getProductsForOrderItems(orderItems, productsMap -> {
-                OrderItemsAdapter adapter = new OrderItemsAdapter(orderItems, productsMap, context);
-                recyclerView.setAdapter(adapter);
+        holder.itemView.setTag(order.getOrderId());
+
+        List<Order.OrderItem> itemsInThisOrder = order.getOrderItems();
+
+        if (itemsInThisOrder != null && !itemsInThisOrder.isEmpty()) {
+            orderRepo.getProductsForOrderItems(itemsInThisOrder, productsMap -> {
+                if (holder.itemView.getTag().equals(order.getOrderId())) {
+                    OrderItemsAdapter adapter = new OrderItemsAdapter(itemsInThisOrder, productsMap, context);
+                    recyclerView.setAdapter(adapter);
+                }
             });
-        });
+        }
 
         orderRepo.getAddressFromId(order.getAddressId(), address -> {
             holder.deliverAddress.setText(
