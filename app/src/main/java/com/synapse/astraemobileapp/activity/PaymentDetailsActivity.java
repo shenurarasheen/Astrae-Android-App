@@ -278,7 +278,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                                         Log.i("PAYHERE", "Payment Successful! Transaction ID: " + statusResponse.getPaymentNo());
 
-                                        Intent intent = new Intent(PaymentDetailsActivity.this, HomeActivity.class);
+                                        Intent intent = new Intent(PaymentDetailsActivity.this, OrdersActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -302,7 +302,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                                         Log.i("PAYHERE", "Payment Successful! Transaction ID: " + statusResponse.getPaymentNo());
 
-                                        Intent intent = new Intent(PaymentDetailsActivity.this, HomeActivity.class);
+                                        Intent intent = new Intent(PaymentDetailsActivity.this, OrdersActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }

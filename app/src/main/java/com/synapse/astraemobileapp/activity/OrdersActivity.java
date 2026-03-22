@@ -1,5 +1,6 @@
 package com.synapse.astraemobileapp.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ public class OrdersActivity extends AppCompatActivity {
 
     private OrderRepository orderRepo;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,8 @@ public class OrdersActivity extends AppCompatActivity {
             }
             OrderAdapter adapter = new OrderAdapter(orders, this);
             binding.orderContainerRecyclerView.setAdapter(adapter);
+
+            binding.orderItemsCount.setText("Items (" + orders.size() + ")");
         });
 
     }
