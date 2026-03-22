@@ -1,5 +1,6 @@
 package com.synapse.astraemobileapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,7 @@ public class OrderItemsAdapter extends RecyclerView.Adapter<OrderItemsAdapter.Or
         return new OrderItemsViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull OrderItemsViewHolder holder, int position) {
         Order.OrderItem orderItem = orderItems.get(position);
@@ -62,15 +64,6 @@ public class OrderItemsAdapter extends RecyclerView.Adapter<OrderItemsAdapter.Or
         holder.itemPrice.setText(String.format(Locale.US, "LKR %,.2f", product.getPrice()));
         holder.itemQuantity.setText("Qty: " + orderItem.getQuantity());
 
-//        orderRepo.getProductFromId(productId, product -> {
-//            if (product == null) return;
-//            loadProductImage(holder.itemImage, product.getProductImages().get(0));
-//            holder.itemTitle.setText(product.getTitle());
-//            loadProductBadges(product.getAttributes(), holder.badgeContainer);
-//            holder.itemPrice.setText(String.format(Locale.US, "LKR %,.2f", product.getPrice()));
-//            holder.itemQuantity.setText("Qty: " + orderItem.getQuantity());
-//
-//        });
     }
 
     private void loadProductImage(ImageView imageView, String imageUrl) {

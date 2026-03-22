@@ -15,7 +15,10 @@ import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.model.Order;
 import com.synapse.astraemobileapp.repository.OrderRepository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 
@@ -46,12 +49,29 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         RecyclerView recyclerView = holder.itemView.findViewById(R.id.item_order_container_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        orderRepo.getOrderItems(orderItems -> {
-            orderRepo.getProductsForOrderItems(orderItems, productsMap -> {
-                OrderItemsAdapter adapter = new OrderItemsAdapter(orderItems, productsMap, context);
-                recyclerView.setAdapter(adapter);
+        holder.itemView.setTag(order.getOrderId());
+
+        List<Order.OrderItem> itemsInThisOrder = order.getOrderItems();
+
+        if (itemsInThisOrder != null && !itemsInThisOrder.isEmpty()) {
+            orderRepo.getProductsForOrderItems(itemsInThisOrder, productsMap -> {
+                if (holder.itemView.getTag().equals(order.getOrderId())) {
+                    OrderItemsAdapter adapter = new OrderItemsAdapter(itemsInThisOrder, productsMap, context);
+                    recyclerView.setAdapter(adapter);
+                }
             });
-        });
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd, MMM yyyy", Locale.getDefault());
+        String estDateString = sdf.format(new Date(order.getDeliveryDate()));
+
+        if (order.getStatus().equalsIgnoreCase("DELIVERED")) {
+            holder.deliverDate.setText("Delivered on " + estDateString);
+        } else {
+            holder.deliverDate.setText("Est Delivery on " + estDateString);
+        }
+
+
 
         orderRepo.getAddressFromId(order.getAddressId(), address -> {
             holder.deliverAddress.setText(

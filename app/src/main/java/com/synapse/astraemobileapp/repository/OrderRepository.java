@@ -21,15 +21,10 @@ public class OrderRepository {
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    private FirebaseStorage storage;
-
-    private Context context;
 
     public OrderRepository(Context context) {
         this.auth = FirebaseAuth.getInstance();
         this.db = FirebaseFirestore.getInstance();
-        this.storage = FirebaseStorage.getInstance();
-        this.context = context;
     }
 
     public void getUserOrders(OrderCallback callback) {
@@ -46,37 +41,6 @@ public class OrderRepository {
                     callback.callback(orders);
                 })
                 .addOnFailureListener(e -> Log.e("OrderRepository", "Error fetching orders ", e));
-    }
-
-
-    public void getOrderItems(OrderItemsCallback callback) {
-        getUserOrders(orders -> {
-            for (Order order: orders) {
-                db.collection("orders").document(order.getOrderId())
-                        .get()
-                        .addOnSuccessListener(ds -> {
-                            if (ds.exists()) {
-                                Order o = ds.toObject(Order.class);
-                                if (o != null) {
-                                    List<Order.OrderItem> orderItems = o.getOrderItems();
-                                    callback.callback(orderItems);
-                                }
-                            }
-                        })
-                        .addOnFailureListener(e -> Log.e("OrderRepository", "Error fetching order items ", e));
-            }
-        });
-    }
-
-    public void getProductFromId(String productId, ProductCallback callback) {
-        db.collection("products")
-                .whereEqualTo("productId", productId)
-                .get()
-                .addOnSuccessListener(qds -> {
-                    Product product = qds.toObjects(Product.class).get(0);
-                    callback.callback(product);
-                })
-                .addOnFailureListener(e -> Log.e("OrderRepository", "Error fetching product ", e));
     }
 
     public void getAddressFromId(String addressId, AddressCallback callback) {
@@ -120,14 +84,6 @@ public class OrderRepository {
 
     public interface OrderCallback {
         void callback(List<Order> orders);
-    }
-
-    public interface OrderItemsCallback {
-        void callback(List<Order.OrderItem> orderItems);
-    }
-
-    public interface ProductCallback {
-        void callback(Product product);
     }
 
     public interface AddressCallback {

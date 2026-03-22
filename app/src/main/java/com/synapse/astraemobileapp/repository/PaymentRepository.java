@@ -109,11 +109,14 @@ public class PaymentRepository {
                 );
             }
 
+            long deliveryDate = Timestamp.now().toDate().getTime() + (7 * 24 * 60 * 60 * 1000);
+
             Order order = Order.builder()
                     .userId(auth.getCurrentUser().getUid())
                     .totalAmount(total)
                     .status("PAID")
                     .orderDate(Timestamp.now().toDate().getTime())
+                    .deliveryDate(deliveryDate)
                     .orderItems(orderItems)
                     .addressId(addressId)
                     .statusResponse(statusResponse)
@@ -177,11 +180,14 @@ public class PaymentRepository {
                 .quantity(quantity)
                 .build();
 
+        long deliveryDate = Timestamp.now().toDate().getTime() + (7 * 24 * 60 * 60 * 1000);
+
         Order order = Order.builder()
                 .userId(auth.getCurrentUser().getUid())
                 .totalAmount(total)
                 .status("PAID")
                 .orderDate(Timestamp.now().toDate().getTime())
+                .deliveryDate(deliveryDate)
                 .orderItems(Arrays.asList(orderItem))
                 .addressId(addressId)
                 .statusResponse(statusResponse)

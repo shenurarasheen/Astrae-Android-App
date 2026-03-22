@@ -82,6 +82,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
+        binding.profileMyOrdersBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, OrdersActivity.class);
+            startActivity(intent);
+        });
+
         binding.profileAllAddressesBtn.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, AddressActivity.class);
             startActivity(intent);

@@ -163,6 +163,7 @@
 
 
                     <ImageView
+                        android:id="@+id/profile_my_orders_btn"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
