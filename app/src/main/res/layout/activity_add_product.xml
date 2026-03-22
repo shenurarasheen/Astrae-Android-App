@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.AddProductActivity"
-    android:layout_margin="15dp">
+    android:padding="15dp">
 
     <ImageView
         android:id="@+id/imageView5"
@@ -37,6 +37,7 @@
             android:layout_marginTop="10dp">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/add_product_image_selector"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:backgroundTint="@color/md_theme_inverseOnSurface_mediumContrast">
@@ -79,6 +80,7 @@
                 android:fontFamily="@font/montserrat_semibold"/>
 
             <LinearLayout
+                android:id="@+id/add_product_selected_images_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -87,6 +89,7 @@
                 android:visibility="gone">
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/necklace"
@@ -97,6 +100,7 @@
                     android:visibility="gone"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img2"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/necklace"
@@ -107,6 +111,7 @@
                     android:visibility="gone"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img3"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/necklace"
@@ -117,6 +122,7 @@
                     android:visibility="gone"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img4"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/necklace"
@@ -240,7 +246,7 @@
                             android:text="Category"
                             android:textSize="13sp" />
 
-                        <EditText
+                        <AutoCompleteTextView
                             android:id="@+id/add_product_category"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
@@ -249,7 +255,7 @@
                             android:ems="10"
                             android:fontFamily="@font/montserrat_medium"
                             android:hint="Select a Category"
-                            android:inputType="text"
+                            android:inputType="none"
                             android:paddingHorizontal="10dp"
                             android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
@@ -280,7 +286,7 @@
                             android:ems="10"
                             android:fontFamily="@font/montserrat_medium"
                             android:hint="34"
-                            android:inputType="text"
+                            android:inputType="numberDecimal"
                             android:paddingHorizontal="10dp"
                             android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
@@ -289,30 +295,79 @@
 
                 </LinearLayout>
 
-                <TextView
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:text="Metal"
-                    android:textSize="13sp" />
-
-                <EditText
-                    android:id="@+id/add_product_metal"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/input_background"
-                    android:ems="10"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:hint="ex:- 24Kt Gold"
-                    android:inputType="numberDecimal"
-                    android:paddingHorizontal="15dp"
-                    android:textColor="@color/gray_600"
-                    android:textColorHint="@color/gray_500"
-                    android:textSize="13sp" />
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox2">
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="5dp">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="Metal"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/add_product_metal"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/input_background"
+                            android:ems="10"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:hint="ex:- 24Kt Gold"
+                            android:inputType="text"
+                            android:paddingHorizontal="15dp"
+                            android:textColor="@color/gray_600"
+                            android:textColorHint="@color/gray_500"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginStart="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="quantity"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/add_product_quantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/input_background"
+                            android:ems="10"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:hint="10"
+                            android:inputType="numberDecimal"
+                            android:paddingHorizontal="15dp"
+                            android:textColor="@color/gray_600"
+                            android:textColorHint="@color/gray_500"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
                 <TextView
@@ -326,7 +381,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="2dp"
                     android:orientation="horizontal"
                     android:paddingHorizontal="15dp"
                     android:gravity="center_vertical"
@@ -351,10 +406,29 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/add_product_cert_upload_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Certificate uploaded"
+                    android:textColor="@color/btn_blue"
+                    android:textSize="11sp"
+                    android:visibility="gone"/>
+
+                <CheckBox
+                    android:id="@+id/add_product_terms_checkbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Terms and Conditions"
+                    android:textSize="12sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
