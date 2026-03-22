@@ -40,6 +40,8 @@ public class ListingFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseAuth auth;
 
+    private static final String APPROVED_STATUS = "APPROVED";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,7 @@ public class ListingFragment extends Fragment {
     private void getProductsByCategory(String categoryId) {
         db.collection("products")
                 .whereEqualTo("categoryId", categoryId)
+                .whereEqualTo("status", APPROVED_STATUS)
                 .orderBy("title", Query.Direction.ASCENDING)
                 .get()
                 .addOnSuccessListener(ds -> {
