@@ -2,6 +2,7 @@ package com.synapse.astraemobileapp.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +23,10 @@ import com.synapse.astraemobileapp.adapter.SellerProductsAdapter;
 import com.synapse.astraemobileapp.databinding.ActivitySellerDetailsBinding;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.model.User;
+import com.synapse.astraemobileapp.repository.MapRepository;
 
 import java.util.List;
+import java.util.Map;
 
 public class SellerDetailsActivity extends AppCompatActivity {
 
@@ -33,6 +36,8 @@ public class SellerDetailsActivity extends AppCompatActivity {
     private FirebaseStorage storage;
 
     private String sellerId;
+
+    private MapRepository mapRepo;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -45,6 +50,8 @@ public class SellerDetailsActivity extends AppCompatActivity {
         binding = ActivitySellerDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        mapRepo = new MapRepository(this);
+
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
 
@@ -54,7 +61,28 @@ public class SellerDetailsActivity extends AppCompatActivity {
             binding.sellerDetailsEmail.setText(seller.getEmail());
 
             //need to set mobile and location details after completing profile.
+            binding.sellerDetailsLocation.setOnClickListener(v -> {
+                Intent locationIntent = new Intent(SellerDetailsActivity.this, SellerLocationMapActivity.class);
+                Map<String, Double> sellerLocation = seller.getLocation();
+                if (sellerLocation == null) return;
+                Bundle bundle = new Bundle();
+                bundle.putDouble("latitude", sellerLocation.get("latitude"));
+                bundle.putDouble("longitude", sellerLocation.get("longitude"));
+                locationIntent.putExtras(bundle);
+                startActivity(locationIntent);
+            });
 
+            binding.sellerDetailsMobile.setOnClickListener(v -> {
+                if (seller.getPermanentAddressId() == null || seller.getPermanentAddressId().isEmpty()) {
+                    Toast.makeText(this, "Seller mobile number not found.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mapRepo.getSellerMobile(seller.getPermanentAddressId(), mobile -> {
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + mobile));
+                    startActivity(callIntent);
+                });
+            });
         });
 
         binding.sellerDetailsProductRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));

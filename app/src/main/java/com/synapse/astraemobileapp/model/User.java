@@ -1,6 +1,7 @@
 package com.synapse.astraemobileapp.model;
 
 import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,4 +19,5 @@ public class User {
     private String email;
     private String profilePicUrl;
     private String permanentAddressId;
+    private Map<String, Double> location;
 }

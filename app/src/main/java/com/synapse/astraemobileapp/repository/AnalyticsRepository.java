@@ -30,7 +30,7 @@ public class AnalyticsRepository {
     }
 
     public void getSellerWeeklyRevenue(WeeklyRevenueCallback callback) {
-        // 1. Calculate the time for 7 days ago (Midnight)
+
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_YEAR, -6);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -38,7 +38,7 @@ public class AnalyticsRepository {
         cal.set(Calendar.SECOND, 0);
         long sevenDaysAgo = cal.getTimeInMillis();
 
-        // 2. Fetch all orders from the last 7 days
+
         db.collection("orders")
                 .whereGreaterThanOrEqualTo("orderDate", sevenDaysAgo)
                 .get()
@@ -50,7 +50,6 @@ public class AnalyticsRepository {
                         return;
                     }
 
-                    // 3. Collect unique Product IDs to verify who the seller is
                     Set<String> productIds = new HashSet<>();
                     for (Order o : orders) {
                         for (Order.OrderItem item : o.getOrderItems()) {
@@ -58,7 +57,6 @@ public class AnalyticsRepository {
                         }
                     }
 
-                    // 4. Fetch Product details to get the sellerId for each product
                     db.collection("products")
                             .whereIn("productId", new ArrayList<>(productIds))
                             .get()
@@ -68,7 +66,6 @@ public class AnalyticsRepository {
                                     productSellerMap.put(ds.getString("productId"), ds.getString("sellerId"));
                                 }
 
-                                // 5. Run the math and filtering
                                 Map<String, Double> finalData = processData(orders, productSellerMap);
                                 callback.onResult(finalData);
                             });
@@ -83,21 +80,19 @@ public class AnalyticsRepository {
         for (Order order : orders) {
             String dateKey = sdf.format(new Date(order.getOrderDate()));
 
-            // Ensure the order date falls within our 7-day window
+
             if (revenueMap.containsKey(dateKey)) {
                 double totalForThisSellerInThisOrder = 0;
 
                 for (Order.OrderItem item : order.getOrderItems()) {
-                    // FILTER: Get the sellerId for this product
+
                     String itemSellerId = prodSellerMap.get(item.getProductId());
 
-                    // ONLY if the product belongs to the CURRENT user
                     if (currentUserId != null && currentUserId.equals(itemSellerId)) {
                         totalForThisSellerInThisOrder += (item.getUnitPrice() * item.getQuantity());
                     }
                 }
 
-                // Add the filtered total to the specific day
                 double currentDayTotal = revenueMap.get(dateKey);
                 revenueMap.put(dateKey, currentDayTotal + totalForThisSellerInThisOrder);
             }

@@ -180,40 +180,47 @@ public class AddProductActivity extends AppCompatActivity {
             return;
         }
 
-        //here need to check if seller added phone number and geo location in their profile.
+        //check if seller added phone number and geo location in their profile.
+        productRepo.isDataFilled(auth.getCurrentUser().getUid(), isFilled -> {
 
-        productRepo.getNewProductId(newProductId -> {
+            if (isFilled) {
+                productRepo.getNewProductId(newProductId -> {
 
-            if(newProductId == null) {
-                Toast.makeText(this, "Failed to generate product ID. Please try again.", Toast.LENGTH_SHORT).show();
-                return;
+                    if(newProductId == null) {
+                        Toast.makeText(this, "Failed to generate product ID. Please try again.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    uploadImagesToFirebase(newProductId, (productImageUrls, certificateUrl) -> {
+
+                        Product product = Product.builder()
+                                .productId(newProductId)
+                                .title(title)
+                                .description(description)
+                                .price(Double.parseDouble(price))
+                                .stockCount(Integer.parseInt(quantity))
+                                .categoryId(selectedCategoryId)
+                                .sellerId(auth.getCurrentUser().getUid())
+                                .productImages(productImageUrls)
+                                .certificateImage(certificateUrl)
+                                .status("PENDING")
+                                .rating(0.0f)
+                                .soldCount(0)
+                                .viewedCount(0)
+                                .attributes(List.of(
+                                        Product.Attribute.builder().name("Size").values(List.of(size)).build(),
+                                        Product.Attribute.builder().name("Metal").values(List.of(metal)).build()
+                                ))
+                                .build();
+
+                        productRepo.saveProduct(product);
+                    });
+                });
+            } else {
+                Toast.makeText(this, "Please complete your profile details first", Toast.LENGTH_SHORT).show();
             }
-
-            uploadImagesToFirebase(newProductId, (productImageUrls, certificateUrl) -> {
-
-                Product product = Product.builder()
-                        .productId(newProductId)
-                        .title(title)
-                        .description(description)
-                        .price(Double.parseDouble(price))
-                        .stockCount(Integer.parseInt(quantity))
-                        .categoryId(selectedCategoryId)
-                        .sellerId(auth.getCurrentUser().getUid())
-                        .productImages(productImageUrls)
-                        .certificateImage(certificateUrl)
-                        .status("PENDING")
-                        .rating(0.0f)
-                        .soldCount(0)
-                        .viewedCount(0)
-                        .attributes(List.of(
-                                Product.Attribute.builder().name("Size").values(List.of(size)).build(),
-                                Product.Attribute.builder().name("Metal").values(List.of(metal)).build()
-                        ))
-                        .build();
-
-                productRepo.saveProduct(product);
-            });
         });
+
 
     }
 

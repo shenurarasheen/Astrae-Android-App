@@ -71,16 +71,16 @@ public class SellerProductsActivity extends AppCompatActivity {
     public void setupCubicChart(Map<String, Double> dataMap) {
         LineChart lineChart = findViewById(R.id.reportingChart);
 
-        // 1. Create your data entries (e.g., Sales in LKR over 5 days)
+        // Create your data entries
         List<Entry> entries = new ArrayList<>();
-        ArrayList<String> labels = new ArrayList<>(); // This holds your "Mon", "Tue", etc.
+        ArrayList<String> labels = new ArrayList<>();
 
         int i = 0;
         for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
             // Save the String to our label list
             labels.add(entry.getKey());
 
-            // Use the INDEX (0, 1, 2...) as the X value
+            // Use the INDEX as the X value
             entries.add(new Entry(i, entry.getValue().floatValue()));
             i++;
         }
