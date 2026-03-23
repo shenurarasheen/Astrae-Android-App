@@ -91,6 +91,11 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, AddressActivity.class);
             startActivity(intent);
         });
+
+        binding.profileMapLocationText.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, MapsActivity.class);
+            startActivity(intent);
+        });
     }
 
 

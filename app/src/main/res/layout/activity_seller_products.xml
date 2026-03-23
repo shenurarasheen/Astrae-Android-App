@@ -12,8 +12,8 @@
         android:id="@+id/imageView5"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="15dp"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_back_arrow" />
@@ -22,42 +22,59 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Selling Products"
         android:textSize="22sp" />
 
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Revenue within week"
-        android:fontFamily="@font/montserrat_semibold"
-        android:textSize="17sp"
-        android:layout_marginTop="25dp"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/selling_products_chart_container"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="15dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your selling products"
-        android:fontFamily="@font/montserrat_semibold"
-        android:textSize="18sp"
-        android:layout_marginTop="25dp"
-        android:layout_marginHorizontal="15dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Total Revenue within week"
+                android:textSize="16sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/selling_products_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/reportingChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginVertical="25dp"
+                android:layout_marginHorizontal="12dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Your selling products"
+                android:textSize="17sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/selling_products_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </LinearLayout>

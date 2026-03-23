@@ -12,6 +12,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.synapse.astraemobileapp.model.Category;
 import com.synapse.astraemobileapp.model.Product;
+import com.synapse.astraemobileapp.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,12 +93,55 @@ public class ProductRepository {
     }
 
 
+    public void getAllSellerProducts(String sellerId, ProductListCallback callback) {
+        db.collection("products")
+                .whereEqualTo("sellerId", sellerId)
+                .get()
+                .addOnSuccessListener(qds -> {
+                    List<Product> products = qds.toObjects(Product.class);
+                    callback.onProductListLoaded(products);
+                })
+                .addOnFailureListener(e -> Log.e("ProductRepository", "Error fetching seller products", e));
+    }
+
+
+    public void isDataFilled(String uId, DataFilledCallback callback) {
+        db.collection("users").document(uId)
+                .get()
+                .addOnSuccessListener(ds -> {
+                    User user = ds.toObject(User.class);
+                    if (user == null) {
+                        callback.callback(false);
+                        return;
+                    }
+                    String addressId = user.getPermanentAddressId();
+                    Map<String, Double> location = user.getLocation();
+
+                    if (addressId == null || addressId.isEmpty() || location == null) {
+                        callback.callback(false);
+                        return;
+                    }
+                    callback.callback(true);
+                })
+                .addOnFailureListener(e -> Log.e("ProductRepository", "Error in isDataFilled", e));
+    }
+
+
+    public interface ProductListCallback {
+        void onProductListLoaded(List<Product> products);
+    }
+
+
     public interface CategoryCallback {
         void onCategoriesLoaded(Map<String, Category> categoryMap);
     }
 
     public interface NewProductIdCallback {
         void onNewProductIdGenerated(String newProductId);
+    }
+
+    public interface DataFilledCallback {
+        void callback(boolean isFilled);
     }
 
 }

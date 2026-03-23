@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id 'com.google.gms.google-services'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -29,6 +30,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig true
         viewBinding true
     }
 }
@@ -68,4 +70,15 @@ dependencies {
     //payhere dependencies
     implementation libs.payhere.android.sdk
     implementation libs.gson
+
+    //MPAndroidChart dependency
+    implementation libs.mpandroidchart
+
+    // Maps SDK for Android
+    implementation libs.play.services.maps
+
+    implementation libs.play.services.location
+
+    //place api
+    implementation(libs.places)
 }
