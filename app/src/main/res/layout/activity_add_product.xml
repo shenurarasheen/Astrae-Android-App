@@ -159,7 +159,6 @@
                     android:hint="Ladies Necklace"
                     android:inputType="text"
                     android:paddingHorizontal="15dp"
-                    android:textColor="@color/gray_600"
                     android:textColorHint="@color/gray_500"
                     android:textSize="13sp" />
 
@@ -218,7 +217,6 @@
                     android:hint="0.00"
                     android:inputType="numberDecimal"
                     android:paddingHorizontal="15dp"
-                    android:textColor="@color/gray_600"
                     android:textColorHint="@color/gray_500"
                     android:textSize="13sp" />
 
@@ -257,7 +255,6 @@
                             android:hint="Select a Category"
                             android:inputType="none"
                             android:paddingHorizontal="10dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
 
@@ -288,7 +285,6 @@
                             android:hint="34"
                             android:inputType="numberDecimal"
                             android:paddingHorizontal="10dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -330,7 +326,6 @@
                             android:hint="ex:- 24Kt Gold"
                             android:inputType="text"
                             android:paddingHorizontal="15dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
 
@@ -361,7 +356,6 @@
                             android:hint="10"
                             android:inputType="numberDecimal"
                             android:paddingHorizontal="15dp"
-                            android:textColor="@color/gray_600"
                             android:textColorHint="@color/gray_500"
                             android:textSize="13sp" />
 

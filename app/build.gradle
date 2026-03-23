@@ -68,4 +68,7 @@ dependencies {
     //payhere dependencies
     implementation libs.payhere.android.sdk
     implementation libs.gson
+
+    //MPAndroidChart dependency
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

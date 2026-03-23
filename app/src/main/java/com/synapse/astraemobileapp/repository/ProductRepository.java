@@ -92,6 +92,22 @@ public class ProductRepository {
     }
 
 
+    public void getAllSellerProducts(String sellerId, ProductListCallback callback) {
+        db.collection("products")
+                .whereEqualTo("sellerId", sellerId)
+                .get()
+                .addOnSuccessListener(qds -> {
+                    List<Product> products = qds.toObjects(Product.class);
+                    callback.onProductListLoaded(products);
+                })
+                .addOnFailureListener(e -> Log.e("ProductRepository", "Error fetching seller products", e));
+    }
+
+    public interface ProductListCallback {
+        void onProductListLoaded(List<Product> products);
+    }
+
+
     public interface CategoryCallback {
         void onCategoriesLoaded(Map<String, Category> categoryMap);
     }
