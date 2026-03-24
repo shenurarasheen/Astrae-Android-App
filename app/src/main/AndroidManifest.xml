@@ -57,6 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.HomeActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".activity.SplashActivity"

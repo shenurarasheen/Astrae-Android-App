@@ -180,6 +180,25 @@ public class CartRepository {
     }
 
 
+    public void deleteAllCartItems() {
+        if (auth.getCurrentUser() == null) {
+            moveToSignIn();
+            return;
+        }
+
+        String uId = auth.getCurrentUser().getUid();
+        db.collection("users").document(uId).collection("cart")
+                .get()
+                .addOnSuccessListener(qds -> {
+                    for (DocumentSnapshot ds : qds.getDocuments()) {
+                        ds.getReference().delete();
+                    }
+                    Toast.makeText(context, "Cart cleared successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> Log.e("CartRepository", "Failed to clear cart"));
+    }
+
+
     private void moveToSignIn() {
         Intent intent = new Intent(context, SignInActivity.class);
         context.startActivity(intent);

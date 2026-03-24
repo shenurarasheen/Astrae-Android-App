@@ -4,15 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/item_section_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="More similar items"
+        android:orientation="horizontal"
         android:layout_marginStart="5dp"
-        android:textSize="17sp"
-        android:fontFamily="@font/montserrat_semibold"
-        android:layout_marginBottom="15dp"/>
+        android:gravity="center_vertical"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/item_section_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More similar items"
+            android:textSize="17sp"
+            android:fontFamily="@font/montserrat_semibold" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_title_arrow_right"
+            android:layout_marginStart="6dp"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_section_recycler_view"

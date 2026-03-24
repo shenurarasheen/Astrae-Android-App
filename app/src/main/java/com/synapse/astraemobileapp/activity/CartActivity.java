@@ -1,8 +1,14 @@
 package com.synapse.astraemobileapp.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.adapter.CartAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityCartBinding;
+import com.synapse.astraemobileapp.helpers.ShakeDetector;
 import com.synapse.astraemobileapp.model.CartItem;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.repository.CartRepository;
@@ -36,6 +43,10 @@ public class CartActivity extends AppCompatActivity {
     private Map<String, Product> priceCache = new HashMap<>();
     private List<CartItem> cartItems = new ArrayList<>();
 
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +56,17 @@ public class CartActivity extends AppCompatActivity {
         profileRepo = new ProfileRepository(this);
 
         setContentView(binding.getRoot());
+
+        // Initialize Sensor
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+
+
+        mShakeDetector.setOnShakeListener(() -> {
+            showConfirmClearDialog();
+        });
+
 
         // get cart items from CartRepository
         cartRepo.getAllCartItems(cartItems -> {
@@ -130,5 +152,41 @@ public class CartActivity extends AppCompatActivity {
         binding.cartSavedPrice.setText(String.format(Locale.US, "LKR %,.2f", saved));
     }
 
+
+    private void showConfirmClearDialog() {
+        DialogUtils.showCustomDialog(
+                this,
+                "Clear Cart",
+                "Are you sure you want to clear all cart items from your cart?",
+                "Yes",
+                "No",
+                new DialogUtils.CustomDialogClickCallback() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onConfirm() {
+                        cartAdapter.notifyDataSetChanged();
+                        cartItems.clear();
+
+                        cartRepo.deleteAllCartItems();
+                        updateTotalUI();
+                    }
+                    @Override
+                    public void onCancel() {
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
+    }
 
 }

@@ -25,6 +25,7 @@ import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.databinding.ActivityHomeBinding;
 import com.synapse.astraemobileapp.databinding.SideNavHeaderBinding;
 import com.synapse.astraemobileapp.fragment.CategoryFragment;
+import com.synapse.astraemobileapp.fragment.HomeFragment;
 import com.synapse.astraemobileapp.repository.ProfileRepository;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NavigationBarView.OnItemSelectedListener {
@@ -96,6 +97,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         sideNavigation.setNavigationItemSelectedListener(this);
         bottomNavigationView.setOnItemSelectedListener(this);
 
+        loadFragment(new HomeFragment());
+
     }
 
     @Override
@@ -115,6 +118,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (itemId == R.id.side_nav_home || itemId == R.id.bottom_nav_home) {
+
+            loadFragment(new HomeFragment());
 
         } else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_nav_profile) {
 
