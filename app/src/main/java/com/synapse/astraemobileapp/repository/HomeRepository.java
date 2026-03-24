@@ -27,7 +27,7 @@ public class HomeRepository {
                 .addOnFailureListener(e -> Log.e("HomeRepository", "Error fetching categories", e));
     }
 
-    public void getNewProducts(NewProductsCallback callback) {
+    public void getNewProducts(ProductsCallback callback) {
         db.collection("products")
                 .whereEqualTo("status", "APPROVED")
                 .orderBy("productId", Query.Direction.DESCENDING)
@@ -35,16 +35,27 @@ public class HomeRepository {
                 .get()
                 .addOnSuccessListener(qds -> {
                     List<Product> products = qds.toObjects(Product.class);
-                    callback.onNewProductsFetched(products);
+                    callback.onProductsFetched(products);
                 })
                 .addOnFailureListener(e -> Log.e("HomeRepository", "Error fetching new products", e));
+    }
+
+    public void getAllProducts(ProductsCallback callback) {
+        db.collection("products")
+                .whereEqualTo("status", "APPROVED")
+                .get()
+                .addOnSuccessListener(qds -> {
+                    List<Product> products = qds.toObjects(Product.class);
+                    callback.onProductsFetched(products);
+                })
+                .addOnFailureListener(e -> Log.e("HomeRepository", "Error fetching all products", e));
     }
 
     public interface CategoriesCallback {
        void onCategoriesFetched(List<Category> categories);
     }
 
-    public interface NewProductsCallback {
-        void onNewProductsFetched(List<Product> products);
+    public interface ProductsCallback {
+        void onProductsFetched(List<Product> products);
     }
 }

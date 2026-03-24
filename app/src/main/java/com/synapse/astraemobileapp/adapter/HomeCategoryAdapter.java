@@ -32,6 +32,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         holder.categoryName.setText(categories.get(position).getName());
+        holder.categoryName.setClipToOutline(true);
     }
 
     @Override

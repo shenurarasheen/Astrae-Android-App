@@ -6,8 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +50,7 @@ public class HomeFragment extends Fragment {
 
         loadCategories();
         loadNewProducts();
+        loadAllProducts();
 
         return binding.getRoot();
     }
@@ -94,8 +98,22 @@ public class HomeFragment extends Fragment {
             });
             binding.newProductItemsSection.itemSectionRecyclerView.setAdapter(adapter);
         });
-        binding.newProductItemsSection.itemSectionTitle.setTextSize(20);
+        binding.newProductItemsSection.itemSectionTitle.setTextSize(18);
         binding.newProductItemsSection.itemSectionTitle.setText("New Items");
+    }
+
+    private void loadAllProducts() {
+        binding.homeAllProductItemsSection.itemSectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        homeRepo.getAllProducts(products -> {
+            NewItemsAdapter adapter = new NewItemsAdapter(products, getContext(), product -> {
+                Intent intent = new Intent(getContext(), ProductDetailsActivity.class);
+                intent.putExtra("productId", product.getProductId());
+                startActivity(intent);
+            });
+            binding.homeAllProductItemsSection.itemSectionRecyclerView.setAdapter(adapter);
+        });
+        binding.homeAllProductItemsSection.itemSectionTitle.setTextSize(18);
+        binding.homeAllProductItemsSection.itemSectionTitle.setText("All Products");
     }
 
     @Override
