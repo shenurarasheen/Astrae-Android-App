@@ -96,6 +96,10 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, MapsActivity.class);
             startActivity(intent);
         });
+
+        binding.profileBackBtn.setOnClickListener(v -> {
+            finish();
+        });
     }
 
 

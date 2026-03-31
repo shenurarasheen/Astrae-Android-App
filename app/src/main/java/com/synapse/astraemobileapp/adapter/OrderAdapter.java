@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,6 +86,40 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             );
         });
         holder.orderStatus.setText(order.getStatus());
+        changeStatusBadge(holder.orderStatus, order.getStatus());
+    }
+
+    private void changeStatusBadge(TextView statusTextView, String status) {
+        switch (status.toUpperCase()) {
+            case "PAID":
+                statusTextView.setBackgroundResource(R.drawable.status_paid_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.paid_status_text_color));
+                break;
+            case "PENDING":
+                statusTextView.setBackgroundResource(R.drawable.status_pending_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.pending_status_text_color));
+                break;
+            case "PROCESSING":
+                statusTextView.setBackgroundResource(R.drawable.status_processing_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.processing_status_text_color));
+                break;
+            case "SHIPPED":
+                statusTextView.setBackgroundResource(R.drawable.status_shipped_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.shipped_status_text_color));
+                break;
+            case "OUT FOR DELIVERY":
+                statusTextView.setBackgroundResource(R.drawable.status_out_for_delivery_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.out_for_delivery_status_text_color));
+                break;
+            case "DELIVERED":
+                statusTextView.setBackgroundResource(R.drawable.status_delivered_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.delivered_status_text_color));
+                break;
+            default:
+                statusTextView.setBackgroundResource(R.drawable.status_paid_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.paid_status_text_color));
+                break;
+        }
     }
 
     @Override

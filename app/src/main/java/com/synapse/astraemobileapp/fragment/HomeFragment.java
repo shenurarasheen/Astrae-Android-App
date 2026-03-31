@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
     private void loadCategories() {
         binding.homeCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         homeRepo.getAllCategories(categories -> {
-            HomeCategoryAdapter adapter = new HomeCategoryAdapter(categories);
+            HomeCategoryAdapter adapter = new HomeCategoryAdapter(categories, getParentFragmentManager());
             binding.homeCategoryRecyclerView.setAdapter(adapter);
         });
     }
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
         carouselExecutor.scheduleWithFixedDelay(() -> {
             getActivity().runOnUiThread(() -> {
                 int nextItem = binding.homeCarouselViewPager.getCurrentItem() + 1;
-                if (nextItem >= binding.homeCategoryRecyclerView.getAdapter().getItemCount()) {
+                if (nextItem >= binding.homeCarouselViewPager.getAdapter().getItemCount()) {
                     nextItem = 0;
                 }
                 binding.homeCarouselViewPager.setCurrentItem(nextItem, true);

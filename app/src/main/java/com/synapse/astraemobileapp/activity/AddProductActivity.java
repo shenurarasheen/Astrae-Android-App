@@ -132,6 +132,10 @@ public class AddProductActivity extends AppCompatActivity {
             );
         });
 
+        binding.addProductBackBtn.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 
     private final ActivityResultLauncher<String> pickerLauncher = registerForActivityResult(

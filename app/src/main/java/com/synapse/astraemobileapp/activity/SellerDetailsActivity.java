@@ -101,6 +101,10 @@ public class SellerDetailsActivity extends AppCompatActivity {
             binding.sellerDetailsItemCount.setText("All items (" + products.size() + ")");
         });
 
+        binding.sellerDetailsBackBtn.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 
     private void getSellerDetails(SellerCallback sellerCallback) {

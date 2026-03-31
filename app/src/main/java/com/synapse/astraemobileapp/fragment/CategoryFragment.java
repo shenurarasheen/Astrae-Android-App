@@ -21,9 +21,11 @@ import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
 import com.synapse.astraemobileapp.databinding.FragmentCategoryBinding;
 import com.synapse.astraemobileapp.databinding.ItemCategoryBinding;
+import com.synapse.astraemobileapp.helpers.RecentProductPrefs;
 import com.synapse.astraemobileapp.model.Category;
 import com.synapse.astraemobileapp.model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryFragment extends Fragment {
@@ -34,6 +36,8 @@ public class CategoryFragment extends Fragment {
     private FirebaseStorage storage;
 
     private FlexboxLayout flexLayout;
+
+    private RecentProductPrefs productPrefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,8 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        productPrefs = new RecentProductPrefs(getContext());
 
         //load categories
         getAllCategories(categories -> {
@@ -95,7 +101,7 @@ public class CategoryFragment extends Fragment {
 
 
         // load recently viewed items (for testing load all products)
-        loadAllProducts();
+        loadRecentProducts();
 
     }
 
@@ -113,8 +119,18 @@ public class CategoryFragment extends Fragment {
                 .commit();
     }
 
-    private void loadAllProducts() {
-        db.collection("products").get()
+    private void loadRecentProducts() {
+
+        if (productPrefs.getRecentIds() == null || productPrefs.getRecentIds().isEmpty()) {
+            binding.categoryNoRecentItemsLayout.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        binding.categoryNoRecentItemsLayout.setVisibility(View.GONE);
+
+        db.collection("products")
+                .whereIn("productId", productPrefs.getRecentIds())
+                .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Product> products = task.getResult().toObjects(Product.class);

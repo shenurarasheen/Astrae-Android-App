@@ -182,4 +182,14 @@
     <color name="paid_badge_text_color">#FF00C853</color>
 
     <color name="free_shipping_text_color">#00C853</color>
+
+    <!--statuses-->
+    <color name="paid_status_text_color">#FF00E5FF</color>
+    <color name="pending_status_text_color">#FFFF4081</color>
+    <color name="processing_status_text_color">#FFAA00FF</color>
+    <color name="shipped_status_text_color">#FFFFD600</color>
+    <color name="out_for_delivery_status_text_color">#FFFF5722</color>
+    <color name="delivered_status_text_color">#FF00C853</color>
+    <color name="rejected_status_text_color">#FFFF1744</color>
+
 </resources>

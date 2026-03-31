@@ -66,16 +66,13 @@ public class ProductRepository {
 
     private String generateNextProductId(String lastId) {
         if (lastId == null || !lastId.startsWith("PROD")) {
-            return "PROD001"; // Fallback if no products exist
+            return "PROD001";
         }
 
-        // 1. Remove "PROD" prefix
         String numberPart = lastId.substring(4);
 
-        // 2. Convert to integer and increment
         int nextNumber = Integer.parseInt(numberPart) + 1;
 
-        // 3. Format back with 3 digits (e.g., 12 becomes "012")
         return String.format("PROD%03d", nextNumber);
     }
 
