@@ -68,10 +68,24 @@ public class CartActivity extends AppCompatActivity {
         });
 
 
+        binding.cartBackBtn.setOnClickListener(v -> {
+            finish();
+        });
+
+
         // get cart items from CartRepository
         cartRepo.getAllCartItems(cartItems -> {
 
             this.cartItems = cartItems;
+
+            if (cartItems.isEmpty()) {
+                binding.cartRecyclerView.setVisibility(View.GONE);
+                binding.cartNoItemsLayout.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            binding.cartRecyclerView.setVisibility(View.VISIBLE);
+            binding.cartNoItemsLayout.setVisibility(View.GONE);
 
             cartRepo.cacheCartProducts(cartItems, productMap -> {
                 this.priceCache = productMap;
@@ -166,6 +180,9 @@ public class CartActivity extends AppCompatActivity {
                     public void onConfirm() {
                         cartAdapter.notifyDataSetChanged();
                         cartItems.clear();
+
+                        binding.cartRecyclerView.setVisibility(View.GONE);
+                        binding.cartNoItemsLayout.setVisibility(View.VISIBLE);
 
                         cartRepo.deleteAllCartItems();
                         updateTotalUI();

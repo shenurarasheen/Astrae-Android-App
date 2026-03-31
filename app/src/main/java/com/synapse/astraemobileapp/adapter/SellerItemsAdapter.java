@@ -1,5 +1,6 @@
 package com.synapse.astraemobileapp.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,9 +24,12 @@ public class SellerItemsAdapter extends RecyclerView.Adapter<SellerItemsAdapter.
     private List<Product> sellerItems;
     private FirebaseStorage storage;
 
-    public SellerItemsAdapter(List<Product> sellerItems) {
+    private Context context;
+
+    public SellerItemsAdapter(List<Product> sellerItems, Context context) {
         this.sellerItems = sellerItems;
         this.storage = FirebaseStorage.getInstance();
+        this.context = context;
     }
 
     @NonNull
@@ -43,6 +48,8 @@ public class SellerItemsAdapter extends RecyclerView.Adapter<SellerItemsAdapter.
         holder.description.setText(product.getDescription());
         holder.price.setText(String.format(Locale.US, "LKR %,.2f", product.getPrice()));
         holder.status.setText(product.getStatus());
+
+        changeStatusBadge(holder.status, product.getStatus());
     }
 
     @Override
@@ -59,6 +66,27 @@ public class SellerItemsAdapter extends RecyclerView.Adapter<SellerItemsAdapter.
                             .centerCrop()
                             .into(imageView);
                 });
+    }
+
+    private void changeStatusBadge(TextView statusTextView, String status) {
+        switch (status.toUpperCase()) {
+            case "PENDING":
+                statusTextView.setBackgroundResource(R.drawable.status_paid_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.paid_status_text_color));
+                break;
+            case "APPROVED":
+                statusTextView.setBackgroundResource(R.drawable.status_delivered_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.delivered_status_text_color));
+                break;
+            case "REJECTED":
+                statusTextView.setBackgroundResource(R.drawable.status_rejected_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.rejected_status_text_color));
+                break;
+            default:
+                statusTextView.setBackgroundResource(R.drawable.status_paid_bg);
+                statusTextView.setTextColor(ContextCompat.getColor(context, R.color.paid_status_text_color));
+                break;
+        }
     }
 
     static class SellerItemsViewHolder extends RecyclerView.ViewHolder {

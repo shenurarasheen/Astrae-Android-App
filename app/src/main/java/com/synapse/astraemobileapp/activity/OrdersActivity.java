@@ -58,5 +58,9 @@ public class OrdersActivity extends AppCompatActivity {
             binding.orderItemsCount.setText("Items (" + orders.size() + ")");
         });
 
+        binding.ordersBackBtn.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 }

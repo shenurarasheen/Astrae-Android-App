@@ -25,6 +25,7 @@
                 android:layout_marginTop="10dp">
 
                 <ImageView
+                    android:id="@+id/seller_details_back_btn"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_back2"/>

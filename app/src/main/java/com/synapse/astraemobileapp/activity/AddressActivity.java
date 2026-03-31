@@ -62,5 +62,9 @@ public class AddressActivity extends AppCompatActivity {
                 });
             }
         });
+
+        binding.addressBackBtn.setOnClickListener(v -> {
+            finish();
+        });
     }
 }

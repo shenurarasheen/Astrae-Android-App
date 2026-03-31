@@ -29,6 +29,7 @@ import com.synapse.astraemobileapp.adapter.ProductSliderAdapter;
 import com.synapse.astraemobileapp.adapter.RecentlyViewItemAdapter;
 import com.synapse.astraemobileapp.adapter.SimilarItemsAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityProductDetailsBinding;
+import com.synapse.astraemobileapp.helpers.RecentProductPrefs;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.repository.CartRepository;
 
@@ -42,6 +43,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private CartRepository cartRepo;
 
+    private RecentProductPrefs productPrefs;
+
     private int qty = 1;
 
     @Override
@@ -53,11 +56,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         cartRepo = new CartRepository(this);
+        productPrefs = new RecentProductPrefs(this);
 
         Intent intent = getIntent();
         String productId = intent.getStringExtra("productId");
 
         loadProductData(productId);
+
+        productPrefs.storeViewedProduct(productId);
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
 //            RenderEffect blurEffect = RenderEffect.createBlurEffect(

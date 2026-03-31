@@ -53,7 +53,7 @@ public class SellerProductsActivity extends AppCompatActivity {
 
         String sellerId = auth.getCurrentUser().getUid();
         productRepo.getAllSellerProducts(sellerId, products -> {
-                SellerItemsAdapter adapter = new SellerItemsAdapter(products);
+                SellerItemsAdapter adapter = new SellerItemsAdapter(products, this);
                 binding.sellingProductsRecyclerView.setAdapter(adapter);
         });
 
@@ -62,8 +62,11 @@ public class SellerProductsActivity extends AppCompatActivity {
                 Log.d("Revenue", entry.getKey() + ": " + entry.getValue());
             }
 
-            // You can now pass this dataMap to your BarChart or UI
             setupCubicChart(dataMap);
+        });
+
+        binding.sellerProductsBackBtn.setOnClickListener(v -> {
+            finish();
         });
 
     }
@@ -71,16 +74,13 @@ public class SellerProductsActivity extends AppCompatActivity {
     public void setupCubicChart(Map<String, Double> dataMap) {
         LineChart lineChart = findViewById(R.id.reportingChart);
 
-        // Create your data entries
         List<Entry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
 
         int i = 0;
         for (Map.Entry<String, Double> entry : dataMap.entrySet()) {
-            // Save the String to our label list
             labels.add(entry.getKey());
 
-            // Use the INDEX as the X value
             entries.add(new Entry(i, entry.getValue().floatValue()));
             i++;
         }
@@ -89,10 +89,8 @@ public class SellerProductsActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                // Convert the float (0.0, 1.0, 2.0) back to an integer index
                 int index = (int) value;
 
-                // Safety check to make sure the index exists in your list
                 if (index >= 0 && index < labels.size()) {
                     return labels.get(index);
                 } else {
@@ -104,26 +102,23 @@ public class SellerProductsActivity extends AppCompatActivity {
         LineDataSet dataSet = new LineDataSet(entries, "Weekly Sales (LKR)");
 
         // --- CUBIC MAGIC START ---
-        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // Makes the lines curved
-        dataSet.setCubicIntensity(0.2f); // Adjusts how "curvy" it is (0.05 to 1.0)
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setCubicIntensity(0.2f);
         // --- CUBIC MAGIC END ---
 
-        // Styling for Astrae Dark/Light theme
-        dataSet.setColor(Color.parseColor("#00E5FF")); // Your Cyan accent
+        dataSet.setColor(Color.parseColor("#00E5FF"));
         dataSet.setCircleColor(Color.parseColor("#00E5FF"));
         dataSet.setLineWidth(3f);
-        dataSet.setDrawValues(false); // Keeps the UI clean
+        dataSet.setDrawValues(false);
 
-        // Add a "Fill" under the curve for a modern look
         dataSet.setDrawFilled(true);
         dataSet.setFillColor(Color.parseColor("#00E5FF"));
-        dataSet.setFillAlpha(50); // Transparency (0-255)
+        dataSet.setFillAlpha(50);
 
         LineData lineData = new LineData(dataSet);
         lineChart.setData(lineData);
 
-        // Refresh the chart
-        lineChart.animateY(1000); // 1 second smooth animation
+        lineChart.animateY(1000);
         lineChart.invalidate();
 
         lineChart.getXAxis().setDrawGridLines(false);
@@ -136,22 +131,19 @@ public class SellerProductsActivity extends AppCompatActivity {
         lineChart.getLegend().setTypeface(tf);
 
 
-        // 1. Change X-Axis Text Color (Dates/Bottom)
-        xAxis.setTextColor(Color.WHITE); // Or use Color.parseColor("#E0E0E0")
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Keeps it at the bottom
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
 
-        // 2. Change Left Y-Axis Text Color (Prices/Left)
         YAxis leftAxis = lineChart.getAxisLeft();
         leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setDrawGridLines(false); // Optional: Clean look
+        leftAxis.setDrawGridLines(false);
 
         Legend legend = lineChart.getLegend();
         legend.setTextColor(Color.WHITE);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
 
-        // 5. Change Description Color (Small text at bottom right)
         lineChart.getDescription().setTextColor(Color.WHITE);
         lineChart.getDescription().setText("Astrae Analytics");
 

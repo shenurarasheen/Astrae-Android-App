@@ -178,7 +178,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.side_nav_login) {
             updateActivity(SignInActivity.class, false);
         } else if (itemId == R.id.side_nav_logout) {
+            if (auth.getCurrentUser() != null) {
+                auth.signOut();
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
 
+                finish();
+            }
         }
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
