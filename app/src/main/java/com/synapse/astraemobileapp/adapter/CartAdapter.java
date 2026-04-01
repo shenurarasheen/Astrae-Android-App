@@ -1,9 +1,12 @@
 package com.synapse.astraemobileapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +42,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private OnQuantityChangedListener quantityListener;
     private OnItemRemoveListener removeListener;
 
+    private int lastPosition = -1;
+
     public void setOnQuantityChangedListener(OnQuantityChangedListener listener) {
         this.quantityListener = listener;
     }
@@ -64,7 +69,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CartViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CartItem item = cartItems.get(position);
         cartRepo.getCartItemProduct(item, product -> {
             loadProductImage(holder.cartItemImage, product.getProductImages().get(0));
@@ -90,6 +95,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 }
             });
         });
+
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(
+                    holder.itemView.getContext(),
+                    R.anim.item_fall_down
+            );
+            holder.itemView.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override

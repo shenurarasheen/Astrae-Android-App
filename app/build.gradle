@@ -81,4 +81,7 @@ dependencies {
 
     //place api
     implementation(libs.places)
+
+    //shimmer effect
+    implementation libs.shimmer
 }
