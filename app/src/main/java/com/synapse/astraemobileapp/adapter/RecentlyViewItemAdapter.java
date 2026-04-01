@@ -1,8 +1,11 @@
 package com.synapse.astraemobileapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +29,8 @@ public class RecentlyViewItemAdapter extends RecyclerView.Adapter<RecentlyViewIt
 
     private FirebaseStorage storage;
 
+    private int lastPosition = -1;
+
     public RecentlyViewItemAdapter(List<Product> products) {
         this.products = products;
         storage = FirebaseStorage.getInstance();
@@ -40,12 +45,21 @@ public class RecentlyViewItemAdapter extends RecyclerView.Adapter<RecentlyViewIt
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecentlyViewItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecentlyViewItemViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Product product = products.get(position);
         loadProductImage(holder.productImage, product.getProductImages().get(0));
         holder.productTitle.setText(product.getTitle());
         loadProductBadges(product.getAttributes(), holder.badgeContainer);
         holder.productPrice.setText(String.format(Locale.US, "%,.2f", product.getPrice()));
+
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(
+                    holder.itemView.getContext(),
+                    R.anim.item_fall_down
+            );
+            holder.itemView.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override

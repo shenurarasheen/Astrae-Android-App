@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 
 public class DialogUtils {
@@ -58,6 +61,43 @@ public class DialogUtils {
             callback.onCancel();
             dialog.dismiss();
         });
+
+        dialog.show();
+    }
+
+    public static void showCertificateDialog(Context context, String imageUrl) {
+
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.item_certificate_dialog);
+
+        Window window = dialog.getWindow();
+
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            WindowManager.LayoutParams params = window.getAttributes();
+
+            params.width = (int) (context.getResources().getDisplayMetrics().widthPixels * 0.90);
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        }
+
+        dialog.findViewById(R.id.certificate_dialog_close_btn).setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        // set certificate image
+
+        ImageView imageView = dialog.findViewById(R.id.certificate_image_view);
+
+        FirebaseStorage.getInstance().getReference("/" + imageUrl)
+                .getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Glide.with(imageView.getContext())
+                            .load(uri)
+                            .centerCrop()
+                            .into(imageView);
+                });
 
         dialog.show();
     }

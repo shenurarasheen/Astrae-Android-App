@@ -20,6 +20,7 @@ playServicesLocation = "21.0.1"
 playServicesMaps = "20.0.0"
 recyclerview = "1.4.0"
 googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
+shimmer = "0.5.0"
 
 [libraries]
 dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
@@ -45,6 +46,7 @@ places = { module = "com.google.android.libraries.places:places", version.ref = 
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

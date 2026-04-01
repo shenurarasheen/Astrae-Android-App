@@ -1,10 +1,12 @@
 package com.synapse.astraemobileapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.flexbox.FlexboxLayout;
+import android.view.animation.AnimationUtils;
 import com.google.firebase.storage.FirebaseStorage;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.activity.PaymentDetailsActivity;
@@ -37,6 +40,8 @@ public class NewItemsAdapter extends RecyclerView.Adapter<NewItemsAdapter.NewIte
     private Context context;
     private static final int SINGLE_PRODUCT_QTY = 1;
 
+    private int lastPosition = -1;
+
     public NewItemsAdapter(List<Product> products, Context context, NewProductOnClickListener listener) {
         this.products = products;
         this.storage = FirebaseStorage.getInstance();
@@ -56,7 +61,8 @@ public class NewItemsAdapter extends RecyclerView.Adapter<NewItemsAdapter.NewIte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewItemViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         Product product = products.get(position);
         loadProductImage(holder.productImage, product.getProductImages().get(0));
         holder.productTitle.setText(product.getTitle());
@@ -83,6 +89,15 @@ public class NewItemsAdapter extends RecyclerView.Adapter<NewItemsAdapter.NewIte
             intent.putExtra("quantity", SINGLE_PRODUCT_QTY);
             context.startActivity(intent);
         });
+
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(
+                    holder.itemView.getContext(),
+                    R.anim.item_fall_down
+            );
+            holder.itemView.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override

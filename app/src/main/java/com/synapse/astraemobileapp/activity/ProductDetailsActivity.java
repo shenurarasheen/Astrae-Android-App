@@ -32,6 +32,7 @@ import com.synapse.astraemobileapp.databinding.ActivityProductDetailsBinding;
 import com.synapse.astraemobileapp.helpers.RecentProductPrefs;
 import com.synapse.astraemobileapp.model.Product;
 import com.synapse.astraemobileapp.repository.CartRepository;
+import com.synapse.astraemobileapp.util.DialogUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -145,6 +146,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             intent.putExtra("price", product.getPrice());
             intent.putExtra("quantity", qty);
             startActivity(intent);
+        });
+
+        binding.singleProductViewCertificateBtn.setOnClickListener(view -> {
+            if (product.getCertificateImage() == null || product.getCertificateImage().isEmpty()) {
+                Toast.makeText(getApplicationContext(), "No certificate available for this product", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            DialogUtils.showCertificateDialog(this, product.getCertificateImage());
         });
     }
 

@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.activity.ProductDetailsActivity;
 import com.synapse.astraemobileapp.adapter.HomeCaroselSliderAdapter;
 import com.synapse.astraemobileapp.adapter.HomeCategoryAdapter;
@@ -62,7 +64,6 @@ public class HomeFragment extends Fragment {
         HomeCaroselSliderAdapter adapter = new HomeCaroselSliderAdapter();
         binding.homeCarouselViewPager.setAdapter(adapter);
         binding.dotsIndicator.attachTo(binding.homeCarouselViewPager);
-
     }
 
     private void loadCategories() {
