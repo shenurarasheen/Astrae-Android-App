@@ -58,6 +58,14 @@
                 android:layout_marginHorizontal="5dp"
                 layout="@layout/item_single_product_similar_section"/>
 
+            <include
+                android:id="@+id/shimmer_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                layout="@layout/item_shimmer_layout"
+                android:visibility="gone"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="240dp"

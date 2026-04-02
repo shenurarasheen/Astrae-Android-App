@@ -149,7 +149,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng home = new LatLng(6.0624677, 80.1813678);
         mMap.addMarker(new MarkerOptions().position(home).title("Marker in Home"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(home));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 25f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 15f));
     }
 
 
