@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Skeleton line placeholder: rounded rectangle, 6dp corners
+     Place in: res/drawable/shimmer_rect_r6.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#3D3D3D" />
+    <corners android:radius="6dp" />
+</shape>

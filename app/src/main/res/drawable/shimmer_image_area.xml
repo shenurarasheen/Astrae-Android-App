@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/shimmer_image_area.xml
+     Light image placeholder — visible against dark #1A1A1A card background -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#E8E8E8" />
+</shape>

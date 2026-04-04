@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cart icon placeholder: circle on light image background
+     Place in: res/drawable/shimmer_circle_dark.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#CCCCCC" />
+</shape>

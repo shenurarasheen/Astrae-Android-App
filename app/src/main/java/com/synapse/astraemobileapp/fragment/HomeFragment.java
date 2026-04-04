@@ -38,6 +38,8 @@ public class HomeFragment extends Fragment {
 
     private ScheduledExecutorService carouselExecutor;
 
+    private ShimmerFrameLayout shimmerContainer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,10 @@ public class HomeFragment extends Fragment {
         HomeCaroselSliderAdapter adapter = new HomeCaroselSliderAdapter();
         binding.homeCarouselViewPager.setAdapter(adapter);
         binding.dotsIndicator.attachTo(binding.homeCarouselViewPager);
+
+        shimmerContainer = binding.shimmerSection.shimmerContainer;
+        binding.shimmerSection.getRoot().setVisibility(View.VISIBLE);
+        shimmerContainer.startShimmer();
     }
 
     private void loadCategories() {
@@ -98,6 +104,9 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             });
             binding.newProductItemsSection.itemSectionRecyclerView.setAdapter(adapter);
+
+            shimmerContainer.stopShimmer();
+            binding.shimmerSection.getRoot().setVisibility(View.GONE);
         });
         binding.newProductItemsSection.itemSectionTitle.setTextSize(18);
         binding.newProductItemsSection.itemSectionTitle.setText("New Items");
