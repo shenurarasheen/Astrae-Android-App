@@ -1,15 +1,20 @@
 package com.synapse.astraemobileapp.activity;
 
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.synapse.astraemobileapp.R;
 import com.synapse.astraemobileapp.adapter.BottomDialogAddressAdapter;
 import com.synapse.astraemobileapp.databinding.ActivityPaymentDetailsBinding;
-import com.synapse.astraemobileapp.databinding.ActivityProfileBinding;
+import com.synapse.astraemobileapp.helpers.Notification;
 import com.synapse.astraemobileapp.model.Address;
 import com.synapse.astraemobileapp.model.User;
 import com.synapse.astraemobileapp.repository.PaymentRepository;
@@ -50,6 +55,8 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     //for single product buying
     private String productId;
     private int quantity;
+
+    private static final String CHANNEL_ID = "channel_01";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +131,9 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         binding.paymentDetailsPayBtn.setOnClickListener(v -> {
             doPayment();
         });
+
+        createNotificationChannel();
+        checkNotificationPermission();
 
     }
 
@@ -281,6 +291,11 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                                         Intent intent = new Intent(PaymentDetailsActivity.this, OrdersActivity.class);
                                         startActivity(intent);
                                         finish();
+
+                                        Notification.sendNotification(
+                                                getApplicationContext(),
+                                                "Astrae - Order Placed",
+                                                "Your Order placed successfully!, You can view your order details in the Orders section.");
                                     }
 
                                     @Override
@@ -325,7 +340,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             });
 
 
-
     private void disableInputs() {
         binding.paymentDetailsFirstName.setEnabled(false);
         binding.paymentDetailsLastName.setEnabled(false);
@@ -356,5 +370,35 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         binding.paymentDetailsMobileNumber.setText("");
     }
 
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission not allowed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "General Channel";
+            String description = "Channel for general notifications";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
+    }
 
 }
